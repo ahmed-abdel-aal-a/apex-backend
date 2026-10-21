@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('coupon_usages');
         Schema::create('coupon_usages', function (Blueprint $table) {
             $table->id();
             $table->foreignId('coupon_id')->constrained('coupons')->cascadeOnDelete();
