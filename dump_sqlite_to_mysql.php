@@ -6,21 +6,33 @@ $kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
 $kernel->bootstrap();
 
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 
-$tables = DB::select("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' AND name NOT LIKE 'migrations'");
+$excludedTables = [
+    'migrations',
+    'jobs',
+    'failed_jobs',
+    'sessions',
+    'cache',
+    'cache_locks',
+    'job_batches'
+];
 
-echo "Found " . count($tables) . " tables to export.\n";
+$tables = DB::select("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'");
 
 $outputFile = __DIR__ . '/database/printexpress_production_data.sql';
 $handle = fopen($outputFile, 'w');
 
-fwrite($handle, "-- Print Express Production Database Dump\n");
+fwrite($handle, "-- Print Express Clean Production Database Dump\n");
 fwrite($handle, "-- Generated on " . date('Y-m-d H:i:s') . "\n\n");
+fwrite($handle, "SET NAMES utf8mb4;\n");
 fwrite($handle, "SET FOREIGN_KEY_CHECKS=0;\n\n");
 
 foreach ($tables as $tableObj) {
     $table = $tableObj->name;
+    if (in_array($table, $excludedTables)) {
+        continue;
+    }
+
     $rows = DB::table($table)->get();
     if ($rows->isEmpty()) {
         continue;
@@ -49,4 +61,4 @@ foreach ($tables as $tableObj) {
 fwrite($handle, "SET FOREIGN_KEY_CHECKS=1;\n");
 fclose($handle);
 
-echo "✅ Database exported successfully to: {$outputFile} (" . filesize($outputFile) . " bytes)\n";
+echo "✅ Clean database exported to: {$outputFile} (" . filesize($outputFile) . " bytes)\n";
