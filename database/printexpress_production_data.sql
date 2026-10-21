@@ -220,7 +220,7 @@ INSERT IGNORE INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_a
 INSERT IGNORE INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES (3, 'Super Admin', 'web', '2026-08-08 17:14:29', '2026-08-08 17:14:29');
 
 -- Data for model_has_roles
-INSERT IGNORE INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES (3, 'user', 2);
+INSERT IGNORE INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES (3, 'user', 1), (3, 'user', 2);
 
 -- Data for role_has_permissions
 INSERT IGNORE INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES (3, 1);
