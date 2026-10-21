@@ -1,0 +1,116 @@
+{
+  "category": {
+    "name": "طباعة صور وفنون",
+    "description": "طباعة صور وفنون عالية الجودة",
+    "icon": "Image",
+    "is_active": true,
+    "allow_custom_name": false,
+    "sort_order": 10
+  },
+  "types": [
+    {
+      "name": "كانفاس", "description": "لوحات كانفاس", "pricing_method": "area",
+      "base_price_fixed": 0, "base_price_unit": 0, "base_price_multiplier": 0,
+      "min_quantity": 1, "quantity_step": 1, "min_chargeable_area": 1000000, "min_chargeable_price": 10000,
+      "is_active": true, "requires_upload": true, "upload_categories": ["design"],
+      "standard_roll_sizes": null, "max_print_width": null, "max_print_length": null,
+      "bleed_margin": 0, "safe_zone": 0, "thickness_factor": 2, "base_production_days": 3, "sort_order": 1,
+      "attributes": [
+          {
+              "name": "width", "label": "العرض (سم)", "type": "number", "step": "specifications", "is_required": true, "sort_order": 1,
+              "min_value": 10, "max_value": 300, "conditional_rules": null, "linked_upload_category": null, "is_dimension_width": true, "is_dimension_length": false,
+              "values": []
+          },
+          {
+              "name": "length", "label": "الطول (سم)", "type": "number", "step": "specifications", "is_required": true, "sort_order": 2,
+              "min_value": 10, "max_value": 300, "conditional_rules": null, "linked_upload_category": null, "is_dimension_width": false, "is_dimension_length": true,
+              "values": []
+          },
+          {
+              "name": "frame", "label": "البرواز", "type": "radio", "step": "finishing", "is_required": true, "sort_order": 3,
+              "min_value": null, "max_value": null, "conditional_rules": null, "linked_upload_category": null, "is_dimension_width": false, "is_dimension_length": false,
+              "values": [
+                  {"value": "wood", "label": "خشب مخفي", "fixed_price": 0, "unit_price": 0, "multiplier_price": 5000, "weight": 0, "weight_type": "per_unit", "tiered_prices": null, "added_production_days": 1, "required_upload_category": null, "sort_order": 1}
+              ]
+          }
+      ],
+      "volume_discounts": []
+    },
+    {
+      "name": "ألومنيوم", "description": "طباعة على ألومنيوم", "pricing_method": "area",
+      "base_price_fixed": 0, "base_price_unit": 0, "base_price_multiplier": 0,
+      "min_quantity": 1, "quantity_step": 1, "min_chargeable_area": 1000000, "min_chargeable_price": 20000,
+      "is_active": true, "requires_upload": true, "upload_categories": ["design"],
+      "standard_roll_sizes": null, "max_print_width": null, "max_print_length": null,
+      "bleed_margin": 0, "safe_zone": 0, "thickness_factor": 1, "base_production_days": 5, "sort_order": 2,
+      "attributes": [
+          {
+              "name": "width", "label": "العرض (سم)", "type": "number", "step": "specifications", "is_required": true, "sort_order": 1,
+              "min_value": 10, "max_value": 200, "conditional_rules": null, "linked_upload_category": null, "is_dimension_width": true, "is_dimension_length": false,
+              "values": []
+          },
+          {
+              "name": "length", "label": "الطول (سم)", "type": "number", "step": "specifications", "is_required": true, "sort_order": 2,
+              "min_value": 10, "max_value": 200, "conditional_rules": null, "linked_upload_category": null, "is_dimension_width": false, "is_dimension_length": true,
+              "values": []
+          }
+      ],
+      "volume_discounts": []
+    },
+    {
+      "name": "ألبومات صور", "description": "ألبومات صور احترافية", "pricing_method": "fixed",
+      "base_price_fixed": 0, "base_price_unit": 0, "base_price_multiplier": 0,
+      "min_quantity": 1, "quantity_step": 1, "min_chargeable_area": 0, "min_chargeable_price": 0,
+      "is_active": true, "requires_upload": true, "upload_categories": ["design"],
+      "standard_roll_sizes": null, "max_print_width": null, "max_print_length": null,
+      "bleed_margin": 0, "safe_zone": 0, "thickness_factor": 0, "base_production_days": 7, "sort_order": 3,
+      "allow_custom_name": true,
+      "attributes": [
+          {
+              "name": "size", "label": "المقاس", "type": "select", "step": "specifications", "is_required": true, "sort_order": 1,
+              "min_value": null, "max_value": null, "conditional_rules": null, "linked_upload_category": null, "is_dimension_width": false, "is_dimension_length": false,
+              "values": [
+                  {"value": "30x30", "label": "30x30 سم", "fixed_price": 0, "unit_price": 50000, "multiplier_price": 0, "weight": 0, "weight_type": "per_unit", "tiered_prices": null, "added_production_days": 0, "required_upload_category": null, "sort_order": 1}
+              ]
+          }
+      ],
+      "volume_discounts": []
+    },
+    {
+      "name": "بازل", "description": "بازل مطبوع", "pricing_method": "fixed",
+      "base_price_fixed": 0, "base_price_unit": 0, "base_price_multiplier": 0,
+      "min_quantity": 1, "quantity_step": 1, "min_chargeable_area": 0, "min_chargeable_price": 0,
+      "is_active": true, "requires_upload": true, "upload_categories": ["design"],
+      "standard_roll_sizes": null, "max_print_width": null, "max_print_length": null,
+      "bleed_margin": 0, "safe_zone": 0, "thickness_factor": 0, "base_production_days": 3, "sort_order": 4,
+      "attributes": [
+          {
+              "name": "size", "label": "عدد القطع", "type": "select", "step": "specifications", "is_required": true, "sort_order": 1,
+              "min_value": null, "max_value": null, "conditional_rules": null, "linked_upload_category": null, "is_dimension_width": false, "is_dimension_length": false,
+              "values": [
+                  {"value": "100", "label": "100 قطعة", "fixed_price": 0, "unit_price": 7000, "multiplier_price": 0, "weight": 0, "weight_type": "per_unit", "tiered_prices": null, "added_production_days": 0, "required_upload_category": null, "sort_order": 1}
+              ]
+          }
+      ],
+      "volume_discounts": []
+    },
+    {
+      "name": "صور عادية", "description": "طباعة صور عادية", "pricing_method": "fixed",
+      "base_price_fixed": 0, "base_price_unit": 0, "base_price_multiplier": 0,
+      "min_quantity": 10, "quantity_step": 10, "min_chargeable_area": 0, "min_chargeable_price": 0,
+      "is_active": true, "requires_upload": true, "upload_categories": ["design"],
+      "standard_roll_sizes": null, "max_print_width": null, "max_print_length": null,
+      "bleed_margin": 0, "safe_zone": 0, "thickness_factor": 0, "base_production_days": 1, "sort_order": 5,
+      "attributes": [
+          {
+              "name": "size", "label": "المقاس", "type": "select", "step": "specifications", "is_required": true, "sort_order": 1,
+              "min_value": null, "max_value": null, "conditional_rules": null, "linked_upload_category": null, "is_dimension_width": false, "is_dimension_length": false,
+              "values": [
+                  {"value": "10x15", "label": "10x15 سم", "fixed_price": 0, "unit_price": 200, "multiplier_price": 0, "weight": 0, "weight_type": "per_unit", "tiered_prices": null, "added_production_days": 0, "required_upload_category": null, "sort_order": 1}
+              ]
+          }
+      ],
+      "volume_discounts": []
+    }
+  ]
+}

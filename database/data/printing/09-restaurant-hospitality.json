@@ -1,0 +1,104 @@
+{
+  "category": {
+    "name": "مطبوعات مطاعم وضيافة",
+    "description": "مطبوعات المطاعم والضيافة",
+    "icon": "UtensilsCrossed",
+    "is_active": true,
+    "allow_custom_name": false,
+    "sort_order": 9
+  },
+  "types": [
+    {
+      "name": "منيو", "description": "منيو", "pricing_method": "fixed",
+      "base_price_fixed": 0, "base_price_unit": 0, "base_price_multiplier": 0,
+      "min_quantity": 10, "quantity_step": 10, "min_chargeable_area": 0, "min_chargeable_price": 0,
+      "is_active": true, "requires_upload": true, "upload_categories": ["design"],
+      "standard_roll_sizes": null, "max_print_width": null, "max_print_length": null,
+      "bleed_margin": 0, "safe_zone": 0, "thickness_factor": 0, "base_production_days": 4, "sort_order": 1,
+      "attributes": [
+          {
+              "name": "size", "label": "المقاس", "type": "select", "step": "specifications", "is_required": true, "sort_order": 1,
+              "min_value": null, "max_value": null, "conditional_rules": null, "linked_upload_category": null, "is_dimension_width": false, "is_dimension_length": false,
+              "values": [
+                  {"value": "a4", "label": "A4", "fixed_price": 0, "unit_price": 1500, "multiplier_price": 0, "weight": 0, "weight_type": "per_unit", "tiered_prices": null, "added_production_days": 0, "required_upload_category": null, "sort_order": 1},
+                  {"value": "a3", "label": "A3", "fixed_price": 0, "unit_price": 3000, "multiplier_price": 0, "weight": 0, "weight_type": "per_unit", "tiered_prices": null, "added_production_days": 0, "required_upload_category": null, "sort_order": 2}
+              ]
+          }
+      ],
+      "volume_discounts": []
+    },
+    {
+      "name": "تيك أواي", "description": "علب وأكياس تيك أواي", "pricing_method": "fixed",
+      "base_price_fixed": 0, "base_price_unit": 0, "base_price_multiplier": 0,
+      "min_quantity": 100, "quantity_step": 100, "min_chargeable_area": 0, "min_chargeable_price": 0,
+      "is_active": true, "requires_upload": true, "upload_categories": ["design"],
+      "standard_roll_sizes": null, "max_print_width": null, "max_print_length": null,
+      "bleed_margin": 0, "safe_zone": 0, "thickness_factor": 0, "base_production_days": 5, "sort_order": 2,
+      "attributes": [
+          {
+              "name": "size", "label": "المقاس", "type": "select", "step": "specifications", "is_required": true, "sort_order": 1,
+              "min_value": null, "max_value": null, "conditional_rules": null, "linked_upload_category": null, "is_dimension_width": false, "is_dimension_length": false,
+              "values": [
+                  {"value": "standard", "label": "قياسي", "fixed_price": 0, "unit_price": 500, "multiplier_price": 0, "weight": 0, "weight_type": "per_unit", "tiered_prices": null, "added_production_days": 0, "required_upload_category": null, "sort_order": 1}
+              ]
+          }
+      ],
+      "volume_discounts": []
+    },
+    {
+      "name": "أندرلاينرز", "description": "أندرلاينرز", "pricing_method": "fixed",
+      "base_price_fixed": 0, "base_price_unit": 0, "base_price_multiplier": 0,
+      "min_quantity": 500, "quantity_step": 500, "min_chargeable_area": 0, "min_chargeable_price": 0,
+      "is_active": true, "requires_upload": true, "upload_categories": ["design"],
+      "standard_roll_sizes": null, "max_print_width": null, "max_print_length": null,
+      "bleed_margin": 0, "safe_zone": 0, "thickness_factor": 0, "base_production_days": 3, "sort_order": 3,
+      "attributes": [
+          {
+              "name": "size", "label": "المقاس", "type": "select", "step": "specifications", "is_required": true, "sort_order": 1,
+              "min_value": null, "max_value": null, "conditional_rules": null, "linked_upload_category": null, "is_dimension_width": false, "is_dimension_length": false,
+              "values": [
+                  {"value": "a3", "label": "A3", "fixed_price": 0, "unit_price": 150, "multiplier_price": 0, "weight": 0, "weight_type": "per_unit", "tiered_prices": null, "added_production_days": 0, "required_upload_category": null, "sort_order": 1}
+              ]
+          }
+      ],
+      "volume_discounts": []
+    },
+    {
+      "name": "كوسترات", "description": "كوسترات مشروبات", "pricing_method": "fixed",
+      "base_price_fixed": 0, "base_price_unit": 0, "base_price_multiplier": 0,
+      "min_quantity": 250, "quantity_step": 250, "min_chargeable_area": 0, "min_chargeable_price": 0,
+      "is_active": true, "requires_upload": true, "upload_categories": ["design"],
+      "standard_roll_sizes": null, "max_print_width": null, "max_print_length": null,
+      "bleed_margin": 0, "safe_zone": 0, "thickness_factor": 0, "base_production_days": 3, "sort_order": 4,
+      "attributes": [
+          {
+              "name": "shape", "label": "الشكل", "type": "select", "step": "specifications", "is_required": true, "sort_order": 1,
+              "min_value": null, "max_value": null, "conditional_rules": null, "linked_upload_category": null, "is_dimension_width": false, "is_dimension_length": false,
+              "values": [
+                  {"value": "circle", "label": "دائري", "fixed_price": 0, "unit_price": 100, "multiplier_price": 0, "weight": 0, "weight_type": "per_unit", "tiered_prices": null, "added_production_days": 0, "required_upload_category": null, "sort_order": 1},
+                  {"value": "square", "label": "مربع", "fixed_price": 0, "unit_price": 100, "multiplier_price": 0, "weight": 0, "weight_type": "per_unit", "tiered_prices": null, "added_production_days": 0, "required_upload_category": null, "sort_order": 2}
+              ]
+          }
+      ],
+      "volume_discounts": []
+    },
+    {
+      "name": "تنت كارد مطاعم", "description": "تنت كارد طاولات", "pricing_method": "fixed",
+      "base_price_fixed": 0, "base_price_unit": 0, "base_price_multiplier": 0,
+      "min_quantity": 50, "quantity_step": 50, "min_chargeable_area": 0, "min_chargeable_price": 0,
+      "is_active": true, "requires_upload": true, "upload_categories": ["design"],
+      "standard_roll_sizes": null, "max_print_width": null, "max_print_length": null,
+      "bleed_margin": 0, "safe_zone": 0, "thickness_factor": 0, "base_production_days": 4, "sort_order": 5,
+      "attributes": [
+          {
+              "name": "size", "label": "المقاس", "type": "select", "step": "specifications", "is_required": true, "sort_order": 1,
+              "min_value": null, "max_value": null, "conditional_rules": null, "linked_upload_category": null, "is_dimension_width": false, "is_dimension_length": false,
+              "values": [
+                  {"value": "a6", "label": "A6 مقفول", "fixed_price": 0, "unit_price": 400, "multiplier_price": 0, "weight": 0, "weight_type": "per_unit", "tiered_prices": null, "added_production_days": 0, "required_upload_category": null, "sort_order": 1}
+              ]
+          }
+      ],
+      "volume_discounts": []
+    }
+  ]
+}

@@ -1,0 +1,640 @@
+{
+  "category": {
+    "name": "هدايا دعائية ومنتجات ترويجية",
+    "description": "هدايا دعائية",
+    "icon": "Gift",
+    "is_active": true,
+    "allow_custom_name": false,
+    "sort_order": 7
+  },
+  "types": [
+    {
+      "name": "مج",
+      "description": "مج مطبوع",
+      "pricing_method": "fixed",
+      "base_price_fixed": 0,
+      "base_price_unit": 6000,
+      "base_price_multiplier": 0,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "min_chargeable_area": 0,
+      "min_chargeable_price": 0,
+      "is_active": true,
+      "requires_upload": true,
+      "upload_categories": [
+        "design"
+      ],
+      "standard_roll_sizes": null,
+      "max_print_width": null,
+      "max_print_length": null,
+      "bleed_margin": 0,
+      "safe_zone": 0,
+      "thickness_factor": 0,
+      "base_production_days": 2,
+      "sort_order": 1,
+      "attributes": [
+        {
+          "name": "color",
+          "label": "اللون",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 1,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "standard",
+              "label": "أساسي",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            }
+          ]
+        }
+      ],
+      "volume_discounts": []
+    },
+    {
+      "name": "مج ماجيك",
+      "description": "مج سحري",
+      "pricing_method": "fixed",
+      "base_price_fixed": 0,
+      "base_price_unit": 9000,
+      "base_price_multiplier": 0,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "min_chargeable_area": 0,
+      "min_chargeable_price": 0,
+      "is_active": true,
+      "requires_upload": true,
+      "upload_categories": [
+        "design"
+      ],
+      "standard_roll_sizes": null,
+      "max_print_width": null,
+      "max_print_length": null,
+      "bleed_margin": 0,
+      "safe_zone": 0,
+      "thickness_factor": 0,
+      "base_production_days": 2,
+      "sort_order": 2,
+      "attributes": [
+        {
+          "name": "color",
+          "label": "اللون",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 1,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "standard",
+              "label": "أساسي",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            }
+          ]
+        }
+      ],
+      "volume_discounts": []
+    },
+    {
+      "name": "زجاجات",
+      "description": "زجاجات",
+      "pricing_method": "fixed",
+      "base_price_fixed": 0,
+      "base_price_unit": 12000,
+      "base_price_multiplier": 0,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "min_chargeable_area": 0,
+      "min_chargeable_price": 0,
+      "is_active": true,
+      "requires_upload": true,
+      "upload_categories": [
+        "design"
+      ],
+      "standard_roll_sizes": null,
+      "max_print_width": null,
+      "max_print_length": null,
+      "bleed_margin": 0,
+      "safe_zone": 0,
+      "thickness_factor": 0,
+      "base_production_days": 3,
+      "sort_order": 3,
+      "attributes": [
+        {
+          "name": "color",
+          "label": "اللون",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 1,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "standard",
+              "label": "أساسي",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            }
+          ]
+        }
+      ],
+      "volume_discounts": []
+    },
+    {
+      "name": "جرابات",
+      "description": "جرابات هواتف",
+      "pricing_method": "fixed",
+      "base_price_fixed": 0,
+      "base_price_unit": 5000,
+      "base_price_multiplier": 0,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "min_chargeable_area": 0,
+      "min_chargeable_price": 0,
+      "is_active": true,
+      "requires_upload": true,
+      "upload_categories": [
+        "design"
+      ],
+      "standard_roll_sizes": null,
+      "max_print_width": null,
+      "max_print_length": null,
+      "bleed_margin": 0,
+      "safe_zone": 0,
+      "thickness_factor": 0,
+      "base_production_days": 2,
+      "sort_order": 4,
+      "attributes": [
+        {
+          "name": "color",
+          "label": "اللون",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 1,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "standard",
+              "label": "أساسي",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            }
+          ]
+        }
+      ],
+      "volume_discounts": []
+    },
+    {
+      "name": "ماوس باد",
+      "description": "ماوس باد",
+      "pricing_method": "fixed",
+      "base_price_fixed": 0,
+      "base_price_unit": 4000,
+      "base_price_multiplier": 0,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "min_chargeable_area": 0,
+      "min_chargeable_price": 0,
+      "is_active": true,
+      "requires_upload": true,
+      "upload_categories": [
+        "design"
+      ],
+      "standard_roll_sizes": null,
+      "max_print_width": null,
+      "max_print_length": null,
+      "bleed_margin": 0,
+      "safe_zone": 0,
+      "thickness_factor": 0,
+      "base_production_days": 2,
+      "sort_order": 5,
+      "attributes": [
+        {
+          "name": "color",
+          "label": "اللون",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 1,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "standard",
+              "label": "أساسي",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            }
+          ]
+        }
+      ],
+      "volume_discounts": []
+    },
+    {
+      "name": "أقلام",
+      "description": "أقلام",
+      "pricing_method": "fixed",
+      "base_price_fixed": 0,
+      "base_price_unit": 1000,
+      "base_price_multiplier": 0,
+      "min_quantity": 50,
+      "quantity_step": 50,
+      "min_chargeable_area": 0,
+      "min_chargeable_price": 0,
+      "is_active": true,
+      "requires_upload": true,
+      "upload_categories": [
+        "design"
+      ],
+      "standard_roll_sizes": null,
+      "max_print_width": null,
+      "max_print_length": null,
+      "bleed_margin": 0,
+      "safe_zone": 0,
+      "thickness_factor": 0,
+      "base_production_days": 3,
+      "sort_order": 6,
+      "attributes": [
+        {
+          "name": "color",
+          "label": "اللون",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 1,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "standard",
+              "label": "أساسي",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            }
+          ]
+        }
+      ],
+      "volume_discounts": []
+    },
+    {
+      "name": "ميداليات",
+      "description": "ميداليات",
+      "pricing_method": "fixed",
+      "base_price_fixed": 0,
+      "base_price_unit": 2000,
+      "base_price_multiplier": 0,
+      "min_quantity": 50,
+      "quantity_step": 50,
+      "min_chargeable_area": 0,
+      "min_chargeable_price": 0,
+      "is_active": true,
+      "requires_upload": true,
+      "upload_categories": [
+        "design"
+      ],
+      "standard_roll_sizes": null,
+      "max_print_width": null,
+      "max_print_length": null,
+      "bleed_margin": 0,
+      "safe_zone": 0,
+      "thickness_factor": 0,
+      "base_production_days": 4,
+      "sort_order": 7,
+      "attributes": [
+        {
+          "name": "color",
+          "label": "اللون",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 1,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "standard",
+              "label": "أساسي",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            }
+          ]
+        }
+      ],
+      "volume_discounts": []
+    },
+    {
+      "name": "دروع",
+      "description": "دروع وتذكارات",
+      "pricing_method": "fixed",
+      "base_price_fixed": 0,
+      "base_price_unit": 25000,
+      "base_price_multiplier": 0,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "min_chargeable_area": 0,
+      "min_chargeable_price": 0,
+      "is_active": true,
+      "requires_upload": true,
+      "upload_categories": [
+        "design"
+      ],
+      "standard_roll_sizes": null,
+      "max_print_width": null,
+      "max_print_length": null,
+      "bleed_margin": 0,
+      "safe_zone": 0,
+      "thickness_factor": 0,
+      "base_production_days": 5,
+      "sort_order": 8,
+      "allow_custom_name": true,
+      "attributes": [
+        {
+          "name": "color",
+          "label": "اللون",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 1,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "standard",
+              "label": "أساسي",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            }
+          ]
+        }
+      ],
+      "volume_discounts": []
+    },
+    {
+      "name": "ساعات",
+      "description": "ساعات",
+      "pricing_method": "fixed",
+      "base_price_fixed": 0,
+      "base_price_unit": 35000,
+      "base_price_multiplier": 0,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "min_chargeable_area": 0,
+      "min_chargeable_price": 0,
+      "is_active": true,
+      "requires_upload": true,
+      "upload_categories": [
+        "design"
+      ],
+      "standard_roll_sizes": null,
+      "max_print_width": null,
+      "max_print_length": null,
+      "bleed_margin": 0,
+      "safe_zone": 0,
+      "thickness_factor": 0,
+      "base_production_days": 5,
+      "sort_order": 9,
+      "attributes": [
+        {
+          "name": "color",
+          "label": "اللون",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 1,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "standard",
+              "label": "أساسي",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            }
+          ]
+        }
+      ],
+      "volume_discounts": []
+    },
+    {
+      "name": "فلاشات",
+      "description": "فلاشات",
+      "pricing_method": "fixed",
+      "base_price_fixed": 0,
+      "base_price_unit": 15000,
+      "base_price_multiplier": 0,
+      "min_quantity": 10,
+      "quantity_step": 10,
+      "min_chargeable_area": 0,
+      "min_chargeable_price": 0,
+      "is_active": true,
+      "requires_upload": true,
+      "upload_categories": [
+        "design"
+      ],
+      "standard_roll_sizes": null,
+      "max_print_width": null,
+      "max_print_length": null,
+      "bleed_margin": 0,
+      "safe_zone": 0,
+      "thickness_factor": 0,
+      "base_production_days": 4,
+      "sort_order": 10,
+      "attributes": [
+        {
+          "name": "color",
+          "label": "اللون",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 1,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "standard",
+              "label": "أساسي",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            }
+          ]
+        }
+      ],
+      "volume_discounts": []
+    },
+    {
+      "name": "شنط قماش",
+      "description": "شنط قماش",
+      "pricing_method": "fixed",
+      "base_price_fixed": 0,
+      "base_price_unit": 8000,
+      "base_price_multiplier": 0,
+      "min_quantity": 25,
+      "quantity_step": 25,
+      "min_chargeable_area": 0,
+      "min_chargeable_price": 0,
+      "is_active": true,
+      "requires_upload": true,
+      "upload_categories": [
+        "design"
+      ],
+      "standard_roll_sizes": null,
+      "max_print_width": null,
+      "max_print_length": null,
+      "bleed_margin": 0,
+      "safe_zone": 0,
+      "thickness_factor": 0,
+      "base_production_days": 5,
+      "sort_order": 11,
+      "attributes": [
+        {
+          "name": "color",
+          "label": "اللون",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 1,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "standard",
+              "label": "أساسي",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            }
+          ]
+        }
+      ],
+      "volume_discounts": []
+    }
+  ]
+}

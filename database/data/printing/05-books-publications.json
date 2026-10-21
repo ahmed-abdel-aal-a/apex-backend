@@ -1,0 +1,455 @@
+{
+  "category": {
+    "name": "كتب ومطبوعات ورقية",
+    "description": "كتب ومطبوعات ورقية",
+    "icon": "BookOpen",
+    "is_active": true,
+    "allow_custom_name": true,
+    "sort_order": 5
+  },
+  "types": [
+    {
+      "name": "كتب ديجيتال",
+      "description": "كتب ديجيتال",
+      "pricing_method": "attributes_only",
+      "base_price_fixed": 0,
+      "base_price_unit": 0,
+      "base_price_multiplier": 0,
+      "min_quantity": 1,
+      "quantity_step": 1,
+      "min_chargeable_area": 0,
+      "min_chargeable_price": 0,
+      "is_active": true,
+      "requires_upload": true,
+      "upload_categories": [
+        "cover",
+        "inner_pages"
+      ],
+      "standard_roll_sizes": null,
+      "max_print_width": null,
+      "max_print_length": null,
+      "bleed_margin": 0,
+      "safe_zone": 0,
+      "thickness_factor": 1,
+      "base_production_days": 3,
+      "sort_order": 1,
+      "attributes": [
+        {
+          "name": "size",
+          "label": "المقاس",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 1,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "a4",
+              "label": "A4",
+              "fixed_price": 0,
+              "unit_price": 2000,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            },
+            {
+              "value": "a5",
+              "label": "A5",
+              "fixed_price": 0,
+              "unit_price": 1000,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 2
+            }
+          ]
+        },
+        {
+          "name": "pages",
+          "label": "عدد الصفحات",
+          "type": "multiplier_number",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 2,
+          "min_value": 20,
+          "max_value": 1000,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "page",
+              "label": "صفحة",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 50,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            }
+          ]
+        }
+      ],
+      "volume_discounts": []
+    },
+    {
+      "name": "كتيبات",
+      "description": "كتيبات",
+      "pricing_method": "attributes_only",
+      "base_price_fixed": 0,
+      "base_price_unit": 0,
+      "base_price_multiplier": 0,
+      "min_quantity": 10,
+      "quantity_step": 10,
+      "min_chargeable_area": 0,
+      "min_chargeable_price": 0,
+      "is_active": true,
+      "requires_upload": true,
+      "upload_categories": [
+        "cover",
+        "inner_pages"
+      ],
+      "standard_roll_sizes": null,
+      "max_print_width": null,
+      "max_print_length": null,
+      "bleed_margin": 0,
+      "safe_zone": 0,
+      "thickness_factor": 1,
+      "base_production_days": 3,
+      "sort_order": 2,
+      "attributes": [
+        {
+          "name": "size",
+          "label": "المقاس",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 1,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "a5",
+              "label": "A5",
+              "fixed_price": 0,
+              "unit_price": 1000,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            }
+          ]
+        }
+      ],
+      "volume_discounts": []
+    },
+    {
+      "name": "مجلات",
+      "description": "مجلات",
+      "pricing_method": "attributes_only",
+      "base_price_fixed": 0,
+      "base_price_unit": 0,
+      "base_price_multiplier": 0,
+      "min_quantity": 100,
+      "quantity_step": 100,
+      "min_chargeable_area": 0,
+      "min_chargeable_price": 0,
+      "is_active": true,
+      "requires_upload": true,
+      "upload_categories": [
+        "design"
+      ],
+      "standard_roll_sizes": null,
+      "max_print_width": null,
+      "max_print_length": null,
+      "bleed_margin": 0,
+      "safe_zone": 0,
+      "thickness_factor": 0,
+      "base_production_days": 7,
+      "sort_order": 3,
+      "attributes": [
+        {
+          "name": "pages",
+          "label": "عدد الصفحات",
+          "type": "multiplier_number",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 1,
+          "min_value": 8,
+          "max_value": 200,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "page",
+              "label": "صفحة",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 100,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            }
+          ]
+        }
+      ],
+      "volume_discounts": []
+    },
+    {
+      "name": "تقارير سنوية",
+      "description": "تقارير سنوية",
+      "pricing_method": "attributes_only",
+      "base_price_fixed": 0,
+      "base_price_unit": 0,
+      "base_price_multiplier": 0,
+      "min_quantity": 10,
+      "quantity_step": 10,
+      "min_chargeable_area": 0,
+      "min_chargeable_price": 0,
+      "is_active": true,
+      "requires_upload": true,
+      "upload_categories": [
+        "design"
+      ],
+      "standard_roll_sizes": null,
+      "max_print_width": null,
+      "max_print_length": null,
+      "bleed_margin": 0,
+      "safe_zone": 0,
+      "thickness_factor": 0,
+      "base_production_days": 5,
+      "sort_order": 4,
+      "attributes": [
+        {
+          "name": "binding",
+          "label": "تجليد",
+          "type": "select",
+          "step": "finishing",
+          "is_required": true,
+          "sort_order": 1,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "wire",
+              "label": "سلك",
+              "fixed_price": 0,
+              "unit_price": 1500,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            }
+          ]
+        }
+      ],
+      "volume_discounts": []
+    },
+    {
+      "name": "تقاويم حائط",
+      "description": "تقاويم حائط",
+      "pricing_method": "fixed",
+      "base_price_fixed": 0,
+      "base_price_unit": 5000,
+      "base_price_multiplier": 0,
+      "min_quantity": 50,
+      "quantity_step": 50,
+      "min_chargeable_area": 0,
+      "min_chargeable_price": 0,
+      "is_active": true,
+      "requires_upload": true,
+      "upload_categories": [
+        "design"
+      ],
+      "standard_roll_sizes": null,
+      "max_print_width": null,
+      "max_print_length": null,
+      "bleed_margin": 0,
+      "safe_zone": 0,
+      "thickness_factor": 0,
+      "base_production_days": 7,
+      "sort_order": 5,
+      "attributes": [
+        {
+          "name": "size",
+          "label": "المقاس",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 1,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "a3",
+              "label": "A3",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            }
+          ]
+        }
+      ],
+      "volume_discounts": []
+    },
+    {
+      "name": "تقاويم مكتب",
+      "description": "تقاويم مكتب",
+      "pricing_method": "fixed",
+      "base_price_fixed": 0,
+      "base_price_unit": 7000,
+      "base_price_multiplier": 0,
+      "min_quantity": 50,
+      "quantity_step": 50,
+      "min_chargeable_area": 0,
+      "min_chargeable_price": 0,
+      "is_active": true,
+      "requires_upload": true,
+      "upload_categories": [
+        "design"
+      ],
+      "standard_roll_sizes": null,
+      "max_print_width": null,
+      "max_print_length": null,
+      "bleed_margin": 0,
+      "safe_zone": 0,
+      "thickness_factor": 0,
+      "base_production_days": 7,
+      "sort_order": 6,
+      "attributes": [
+        {
+          "name": "size",
+          "label": "المقاس",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 1,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "a5",
+              "label": "A5",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            }
+          ]
+        }
+      ],
+      "volume_discounts": []
+    },
+    {
+      "name": "دفاتر ملاحظات",
+      "description": "دفاتر ملاحظات",
+      "pricing_method": "fixed",
+      "base_price_fixed": 0,
+      "base_price_unit": 6000,
+      "base_price_multiplier": 0,
+      "min_quantity": 50,
+      "quantity_step": 50,
+      "min_chargeable_area": 0,
+      "min_chargeable_price": 0,
+      "is_active": true,
+      "requires_upload": true,
+      "upload_categories": [
+        "cover"
+      ],
+      "standard_roll_sizes": null,
+      "max_print_width": null,
+      "max_print_length": null,
+      "bleed_margin": 0,
+      "safe_zone": 0,
+      "thickness_factor": 0,
+      "base_production_days": 5,
+      "sort_order": 7,
+      "attributes": [
+        {
+          "name": "size",
+          "label": "المقاس",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 1,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "a5",
+              "label": "A5",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            }
+          ]
+        }
+      ],
+      "volume_discounts": []
+    }
+  ]
+}

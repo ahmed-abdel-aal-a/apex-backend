@@ -1,0 +1,103 @@
+{
+  "category": {
+    "name": "مطبوعات مناسبات وأحداث",
+    "description": "مطبوعات للمناسبات الخاصة والأحداث",
+    "icon": "PartyPopper",
+    "is_active": true,
+    "allow_custom_name": false,
+    "sort_order": 8
+  },
+  "types": [
+    {
+      "name": "دعوات زفاف", "description": "دعوات زفاف", "pricing_method": "fixed",
+      "base_price_fixed": 0, "base_price_unit": 0, "base_price_multiplier": 0,
+      "min_quantity": 50, "quantity_step": 50, "min_chargeable_area": 0, "min_chargeable_price": 0,
+      "is_active": true, "requires_upload": true, "upload_categories": ["design"],
+      "standard_roll_sizes": null, "max_print_width": null, "max_print_length": null,
+      "bleed_margin": 0, "safe_zone": 0, "thickness_factor": 0, "base_production_days": 4, "sort_order": 1,
+      "attributes": [
+          {
+              "name": "size", "label": "المقاس", "type": "select", "step": "specifications", "is_required": true, "sort_order": 1,
+              "min_value": null, "max_value": null, "conditional_rules": null, "linked_upload_category": null, "is_dimension_width": false, "is_dimension_length": false,
+              "values": [
+                  {"value": "15x20", "label": "15x20 سم", "fixed_price": 0, "unit_price": 500, "multiplier_price": 0, "weight": 0, "weight_type": "per_unit", "tiered_prices": null, "added_production_days": 0, "required_upload_category": null, "sort_order": 1}
+              ]
+          }
+      ],
+      "volume_discounts": []
+    },
+    {
+      "name": "كروت تهنئة", "description": "كروت تهنئة", "pricing_method": "fixed",
+      "base_price_fixed": 0, "base_price_unit": 0, "base_price_multiplier": 0,
+      "min_quantity": 50, "quantity_step": 50, "min_chargeable_area": 0, "min_chargeable_price": 0,
+      "is_active": true, "requires_upload": true, "upload_categories": ["design"],
+      "standard_roll_sizes": null, "max_print_width": null, "max_print_length": null,
+      "bleed_margin": 0, "safe_zone": 0, "thickness_factor": 0, "base_production_days": 3, "sort_order": 2,
+      "attributes": [
+          {
+              "name": "size", "label": "المقاس", "type": "select", "step": "specifications", "is_required": true, "sort_order": 1,
+              "min_value": null, "max_value": null, "conditional_rules": null, "linked_upload_category": null, "is_dimension_width": false, "is_dimension_length": false,
+              "values": [
+                  {"value": "a5", "label": "A5 مطوي", "fixed_price": 0, "unit_price": 300, "multiplier_price": 0, "weight": 0, "weight_type": "per_unit", "tiered_prices": null, "added_production_days": 0, "required_upload_category": null, "sort_order": 1}
+              ]
+          }
+      ],
+      "volume_discounts": []
+    },
+    {
+      "name": "شهادات", "description": "شهادات", "pricing_method": "fixed",
+      "base_price_fixed": 0, "base_price_unit": 0, "base_price_multiplier": 0,
+      "min_quantity": 10, "quantity_step": 10, "min_chargeable_area": 0, "min_chargeable_price": 0,
+      "is_active": true, "requires_upload": true, "upload_categories": ["design"],
+      "standard_roll_sizes": null, "max_print_width": null, "max_print_length": null,
+      "bleed_margin": 0, "safe_zone": 0, "thickness_factor": 0, "base_production_days": 2, "sort_order": 3,
+      "allow_custom_name": true,
+      "attributes": [
+          {
+              "name": "size", "label": "المقاس", "type": "select", "step": "specifications", "is_required": true, "sort_order": 1,
+              "min_value": null, "max_value": null, "conditional_rules": null, "linked_upload_category": null, "is_dimension_width": false, "is_dimension_length": false,
+              "values": [
+                  {"value": "a4", "label": "A4", "fixed_price": 0, "unit_price": 500, "multiplier_price": 0, "weight": 0, "weight_type": "per_unit", "tiered_prices": null, "added_production_days": 0, "required_upload_category": null, "sort_order": 1}
+              ]
+          }
+      ],
+      "volume_discounts": []
+    },
+    {
+      "name": "تذاكر", "description": "تذاكر", "pricing_method": "fixed",
+      "base_price_fixed": 0, "base_price_unit": 0, "base_price_multiplier": 0,
+      "min_quantity": 100, "quantity_step": 100, "min_chargeable_area": 0, "min_chargeable_price": 0,
+      "is_active": true, "requires_upload": true, "upload_categories": ["design"],
+      "standard_roll_sizes": null, "max_print_width": null, "max_print_length": null,
+      "bleed_margin": 0, "safe_zone": 0, "thickness_factor": 0, "base_production_days": 3, "sort_order": 4,
+      "attributes": [
+          {
+              "name": "size", "label": "المقاس", "type": "select", "step": "specifications", "is_required": true, "sort_order": 1,
+              "min_value": null, "max_value": null, "conditional_rules": null, "linked_upload_category": null, "is_dimension_width": false, "is_dimension_length": false,
+              "values": [
+                  {"value": "21x7", "label": "21x7 سم", "fixed_price": 0, "unit_price": 100, "multiplier_price": 0, "weight": 0, "weight_type": "per_unit", "tiered_prices": null, "added_production_days": 0, "required_upload_category": null, "sort_order": 1}
+              ]
+          }
+      ],
+      "volume_discounts": []
+    },
+    {
+      "name": "باچات", "description": "باچات", "pricing_method": "fixed",
+      "base_price_fixed": 0, "base_price_unit": 0, "base_price_multiplier": 0,
+      "min_quantity": 50, "quantity_step": 50, "min_chargeable_area": 0, "min_chargeable_price": 0,
+      "is_active": true, "requires_upload": true, "upload_categories": ["design"],
+      "standard_roll_sizes": null, "max_print_width": null, "max_print_length": null,
+      "bleed_margin": 0, "safe_zone": 0, "thickness_factor": 0, "base_production_days": 2, "sort_order": 5,
+      "attributes": [
+          {
+              "name": "size", "label": "المقاس", "type": "select", "step": "specifications", "is_required": true, "sort_order": 1,
+              "min_value": null, "max_value": null, "conditional_rules": null, "linked_upload_category": null, "is_dimension_width": false, "is_dimension_length": false,
+              "values": [
+                  {"value": "10x7", "label": "10x7 سم", "fixed_price": 0, "unit_price": 200, "multiplier_price": 0, "weight": 0, "weight_type": "per_unit", "tiered_prices": null, "added_production_days": 0, "required_upload_category": null, "sort_order": 1}
+              ]
+          }
+      ],
+      "volume_discounts": []
+    }
+  ]
+}

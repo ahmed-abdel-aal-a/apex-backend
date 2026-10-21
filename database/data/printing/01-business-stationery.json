@@ -1,0 +1,1682 @@
+{
+  "category": {
+    "name": "مطبوعات تجارية ومكتبية",
+    "description": "كروت، ورق مراسلات، أظرف وكل ما يخص هويتك التجارية",
+    "icon": "Briefcase",
+    "is_active": true,
+    "allow_custom_name": false,
+    "sort_order": 1
+  },
+  "types": [
+    {
+      "name": "كروت شخصية",
+      "description": "كروت شخصية تعكس هويتك",
+      "pricing_method": "fixed",
+      "base_price_fixed": 0,
+      "base_price_unit": 0,
+      "base_price_multiplier": 0,
+      "min_quantity": 100,
+      "quantity_step": 50,
+      "min_chargeable_area": 0,
+      "min_chargeable_price": 0,
+      "is_active": true,
+      "requires_upload": true,
+      "upload_categories": [
+        "design"
+      ],
+      "standard_roll_sizes": null,
+      "max_print_width": null,
+      "max_print_length": null,
+      "bleed_margin": 3,
+      "safe_zone": 5,
+      "thickness_factor": 0,
+      "base_production_days": 2,
+      "sort_order": 1,
+      "attributes": [
+        {
+          "name": "size",
+          "label": "المقاس",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 1,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "9x5",
+              "label": "9×5 سم",
+              "fixed_price": 15000,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            },
+            {
+              "value": "9x5.5",
+              "label": "9×5.5 سم",
+              "fixed_price": 17000,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 2
+            },
+            {
+              "value": "8.5x5.5",
+              "label": "8.5×5.5 مربع",
+              "fixed_price": 18000,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 3
+            }
+          ]
+        },
+        {
+          "name": "paper",
+          "label": "الورق",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 2,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "couche300",
+              "label": "كوشيه 300",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            },
+            {
+              "value": "cotton350",
+              "label": "كوتن 350",
+              "fixed_price": 0,
+              "unit_price": 30,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 2
+            },
+            {
+              "value": "kraft300",
+              "label": "كرافت 300",
+              "fixed_price": 0,
+              "unit_price": 25,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 3
+            },
+            {
+              "value": "white400",
+              "label": "أبيض 400",
+              "fixed_price": 0,
+              "unit_price": 50,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 4
+            }
+          ]
+        },
+        {
+          "name": "print",
+          "label": "طباعة",
+          "type": "radio",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 3,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "front",
+              "label": "وجه",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            },
+            {
+              "value": "both",
+              "label": "وجهين",
+              "fixed_price": 0,
+              "unit_price": 20,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 2
+            }
+          ]
+        },
+        {
+          "name": "lamination",
+          "label": "تغليف",
+          "type": "checkbox",
+          "step": "finishing",
+          "is_required": false,
+          "sort_order": 4,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "matte",
+              "label": "مط",
+              "fixed_price": 0,
+              "unit_price": 10,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            },
+            {
+              "value": "glossy",
+              "label": "لامع",
+              "fixed_price": 0,
+              "unit_price": 10,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 2
+            }
+          ]
+        },
+        {
+          "name": "special",
+          "label": "خاص",
+          "type": "checkbox",
+          "step": "finishing",
+          "is_required": false,
+          "sort_order": 5,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "spot_uv",
+              "label": "سبوت UV",
+              "fixed_price": 0,
+              "unit_price": 30,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": "spot_uv_mask",
+              "sort_order": 1
+            },
+            {
+              "value": "hot_foil_gold",
+              "label": "حراري ذهبي",
+              "fixed_price": 0,
+              "unit_price": 50,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 2
+            },
+            {
+              "value": "rounded_corners",
+              "label": "حواف دائرية",
+              "fixed_price": 2000,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 3
+            }
+          ]
+        }
+      ],
+      "volume_discounts": [
+        {
+          "min_qty": 250,
+          "max_qty": 499,
+          "discount_basis_points": 500,
+          "added_production_days": 0
+        },
+        {
+          "min_qty": 500,
+          "max_qty": 999,
+          "discount_basis_points": 1000,
+          "added_production_days": 0
+        },
+        {
+          "min_qty": 1000,
+          "max_qty": 999999,
+          "discount_basis_points": 1500,
+          "added_production_days": 0
+        }
+      ]
+    },
+    {
+      "name": "ورق مراسلات",
+      "description": "ورق مراسلات",
+      "pricing_method": "fixed",
+      "base_price_fixed": 0,
+      "base_price_unit": 0,
+      "base_price_multiplier": 0,
+      "min_quantity": 100,
+      "quantity_step": 100,
+      "min_chargeable_area": 0,
+      "min_chargeable_price": 0,
+      "is_active": true,
+      "requires_upload": true,
+      "upload_categories": [
+        "design"
+      ],
+      "standard_roll_sizes": null,
+      "max_print_width": null,
+      "max_print_length": null,
+      "bleed_margin": 0,
+      "safe_zone": 0,
+      "thickness_factor": 0,
+      "base_production_days": 2,
+      "sort_order": 2,
+      "attributes": [
+        {
+          "name": "size",
+          "label": "المقاس",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 1,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "a4",
+              "label": "A4",
+              "fixed_price": 12000,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            },
+            {
+              "value": "a5",
+              "label": "A5",
+              "fixed_price": 8000,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 2
+            }
+          ]
+        },
+        {
+          "name": "paper",
+          "label": "الورق",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 2,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "white100",
+              "label": "أبيض 100",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            },
+            {
+              "value": "white120",
+              "label": "أبيض 120",
+              "fixed_price": 0,
+              "unit_price": 10,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 2
+            },
+            {
+              "value": "cotton_cream120",
+              "label": "كوتن كريم 120",
+              "fixed_price": 0,
+              "unit_price": 25,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 3
+            }
+          ]
+        },
+        {
+          "name": "colors",
+          "label": "ألوان",
+          "type": "radio",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 3,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "full",
+              "label": "كاملة",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            },
+            {
+              "value": "pantone",
+              "label": "بانتون",
+              "fixed_price": 0,
+              "unit_price": -5,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 2
+            }
+          ]
+        }
+      ],
+      "volume_discounts": [
+        {
+          "min_qty": 250,
+          "max_qty": 499,
+          "discount_basis_points": 500,
+          "added_production_days": 0
+        },
+        {
+          "min_qty": 500,
+          "max_qty": 999,
+          "discount_basis_points": 800,
+          "added_production_days": 0
+        },
+        {
+          "min_qty": 1000,
+          "max_qty": 999999,
+          "discount_basis_points": 1200,
+          "added_production_days": 0
+        }
+      ]
+    },
+    {
+      "name": "أظرف",
+      "description": "أظرف",
+      "pricing_method": "fixed",
+      "base_price_fixed": 0,
+      "base_price_unit": 0,
+      "base_price_multiplier": 0,
+      "min_quantity": 100,
+      "quantity_step": 100,
+      "min_chargeable_area": 0,
+      "min_chargeable_price": 0,
+      "is_active": true,
+      "requires_upload": true,
+      "upload_categories": [
+        "design"
+      ],
+      "standard_roll_sizes": null,
+      "max_print_width": null,
+      "max_print_length": null,
+      "bleed_margin": 0,
+      "safe_zone": 0,
+      "thickness_factor": 0,
+      "base_production_days": 3,
+      "sort_order": 3,
+      "attributes": [
+        {
+          "name": "size",
+          "label": "المقاس",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 1,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "dl",
+              "label": "DL",
+              "fixed_price": 10000,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            },
+            {
+              "value": "c5",
+              "label": "C5",
+              "fixed_price": 13000,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 2
+            },
+            {
+              "value": "c4",
+              "label": "C4",
+              "fixed_price": 16000,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 3
+            },
+            {
+              "value": "square160",
+              "label": "مربع 160",
+              "fixed_price": 12000,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 4
+            }
+          ]
+        },
+        {
+          "name": "paper",
+          "label": "الورق",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 2,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "white100",
+              "label": "أبيض 100",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            },
+            {
+              "value": "kraft120",
+              "label": "كرافت 120",
+              "fixed_price": 0,
+              "unit_price": 15,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 2
+            },
+            {
+              "value": "cotton_cream",
+              "label": "كوتن كريم",
+              "fixed_price": 0,
+              "unit_price": 30,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 3
+            }
+          ]
+        },
+        {
+          "name": "print",
+          "label": "طباعة",
+          "type": "radio",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 3,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "outer",
+              "label": "خارجي",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            },
+            {
+              "value": "both",
+              "label": "وجهين",
+              "fixed_price": 0,
+              "unit_price": 25,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 2
+            }
+          ]
+        }
+      ],
+      "volume_discounts": [
+        {
+          "min_qty": 250,
+          "max_qty": 499,
+          "discount_basis_points": 500,
+          "added_production_days": 0
+        },
+        {
+          "min_qty": 500,
+          "max_qty": 999999,
+          "discount_basis_points": 1000,
+          "added_production_days": 0
+        }
+      ]
+    },
+    {
+      "name": "فواتير NCR",
+      "description": "فواتير NCR",
+      "pricing_method": "attributes_only",
+      "base_price_fixed": 0,
+      "base_price_unit": 0,
+      "base_price_multiplier": 0,
+      "min_quantity": 5,
+      "quantity_step": 5,
+      "min_chargeable_area": 0,
+      "min_chargeable_price": 0,
+      "is_active": true,
+      "requires_upload": true,
+      "upload_categories": [
+        "design"
+      ],
+      "standard_roll_sizes": null,
+      "max_print_width": null,
+      "max_print_length": null,
+      "bleed_margin": 0,
+      "safe_zone": 0,
+      "thickness_factor": 0,
+      "base_production_days": 4,
+      "sort_order": 4,
+      "attributes": [
+        {
+          "name": "size",
+          "label": "المقاس",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 1,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "a5",
+              "label": "A5",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            },
+            {
+              "value": "a4",
+              "label": "A4",
+              "fixed_price": 500,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 2
+            },
+            {
+              "value": "a3",
+              "label": "A3",
+              "fixed_price": 1500,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 3
+            }
+          ]
+        },
+        {
+          "name": "copies",
+          "label": "نسخ كربون",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 2,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "2",
+              "label": "نسختين",
+              "fixed_price": 0,
+              "unit_price": 400,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            },
+            {
+              "value": "3",
+              "label": "3 نسخ",
+              "fixed_price": 0,
+              "unit_price": 600,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 2
+            },
+            {
+              "value": "4",
+              "label": "4 نسخ",
+              "fixed_price": 0,
+              "unit_price": 800,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 3
+            }
+          ]
+        },
+        {
+          "name": "sheets",
+          "label": "عدد أوراق",
+          "type": "multiplier_number",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 3,
+          "min_value": 25,
+          "max_value": 100,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "sheet",
+              "label": "ورقة",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 20,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            }
+          ]
+        },
+        {
+          "name": "numbering",
+          "label": "ترقيم",
+          "type": "radio",
+          "step": "finishing",
+          "is_required": false,
+          "sort_order": 4,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "none",
+              "label": "بدون",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            },
+            {
+              "value": "serial",
+              "label": "تسلسلي",
+              "fixed_price": 0,
+              "unit_price": 200,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 2
+            }
+          ]
+        }
+      ],
+      "volume_discounts": [
+        {
+          "min_qty": 10,
+          "max_qty": 24,
+          "discount_basis_points": 500,
+          "added_production_days": 0
+        },
+        {
+          "min_qty": 25,
+          "max_qty": 49,
+          "discount_basis_points": 800,
+          "added_production_days": 0
+        },
+        {
+          "min_qty": 50,
+          "max_qty": 999999,
+          "discount_basis_points": 1200,
+          "added_production_days": 0
+        }
+      ]
+    },
+    {
+      "name": "ملفات عروض",
+      "description": "ملفات عروض",
+      "pricing_method": "fixed",
+      "base_price_fixed": 0,
+      "base_price_unit": 0,
+      "base_price_multiplier": 0,
+      "min_quantity": 50,
+      "quantity_step": 50,
+      "min_chargeable_area": 0,
+      "min_chargeable_price": 0,
+      "is_active": true,
+      "requires_upload": true,
+      "upload_categories": [
+        "design"
+      ],
+      "standard_roll_sizes": null,
+      "max_print_width": null,
+      "max_print_length": null,
+      "bleed_margin": 0,
+      "safe_zone": 0,
+      "thickness_factor": 0,
+      "base_production_days": 5,
+      "sort_order": 5,
+      "attributes": [
+        {
+          "name": "size",
+          "label": "المقاس",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 1,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "a4",
+              "label": "A4",
+              "fixed_price": 40000,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            },
+            {
+              "value": "a4_pocket",
+              "label": "A4 + جيب",
+              "fixed_price": 55000,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 2
+            }
+          ]
+        },
+        {
+          "name": "paper",
+          "label": "ورق",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 2,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "couche350",
+              "label": "كوشيه 350",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            },
+            {
+              "value": "carton400",
+              "label": "كرتون 400",
+              "fixed_price": 0,
+              "unit_price": 100,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 2
+            }
+          ]
+        },
+        {
+          "name": "lamination",
+          "label": "تغليف",
+          "type": "select",
+          "step": "finishing",
+          "is_required": true,
+          "sort_order": 3,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "matte",
+              "label": "مط",
+              "fixed_price": 0,
+              "unit_price": 50,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            },
+            {
+              "value": "glossy",
+              "label": "لامع",
+              "fixed_price": 0,
+              "unit_price": 50,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 2
+            },
+            {
+              "value": "soft_touch",
+              "label": "سوفت تاتش",
+              "fixed_price": 0,
+              "unit_price": 150,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 3
+            }
+          ]
+        },
+        {
+          "name": "special",
+          "label": "خاص",
+          "type": "checkbox",
+          "step": "finishing",
+          "is_required": false,
+          "sort_order": 4,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "spot_uv",
+              "label": "سبوت UV",
+              "fixed_price": 0,
+              "unit_price": 100,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            },
+            {
+              "value": "thermal",
+              "label": "حراري",
+              "fixed_price": 0,
+              "unit_price": 200,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 2
+            }
+          ]
+        }
+      ],
+      "volume_discounts": [
+        {
+          "min_qty": 100,
+          "max_qty": 249,
+          "discount_basis_points": 500,
+          "added_production_days": 0
+        },
+        {
+          "min_qty": 250,
+          "max_qty": 999999,
+          "discount_basis_points": 1000,
+          "added_production_days": 0
+        }
+      ]
+    },
+    {
+      "name": "كومبليمنت سليب",
+      "description": "كومبليمنت سليب",
+      "pricing_method": "fixed",
+      "base_price_fixed": 0,
+      "base_price_unit": 0,
+      "base_price_multiplier": 0,
+      "min_quantity": 100,
+      "quantity_step": 100,
+      "min_chargeable_area": 0,
+      "min_chargeable_price": 0,
+      "is_active": true,
+      "requires_upload": true,
+      "upload_categories": [
+        "design"
+      ],
+      "standard_roll_sizes": null,
+      "max_print_width": null,
+      "max_print_length": null,
+      "bleed_margin": 0,
+      "safe_zone": 0,
+      "thickness_factor": 0,
+      "base_production_days": 2,
+      "sort_order": 6,
+      "attributes": [
+        {
+          "name": "size",
+          "label": "المقاس",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 1,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "std",
+              "label": "21×10سم(قياسي)",
+              "fixed_price": 6000,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            },
+            {
+              "value": "small",
+              "label": "21×7سم",
+              "fixed_price": 5000,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 2
+            }
+          ]
+        },
+        {
+          "name": "paper",
+          "label": "ورق",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 2,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "white100",
+              "label": "أبيض 100",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            },
+            {
+              "value": "cotton120",
+              "label": "كوتن 120",
+              "fixed_price": 0,
+              "unit_price": 15,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 2
+            },
+            {
+              "value": "kraft",
+              "label": "كرافت",
+              "fixed_price": 0,
+              "unit_price": 10,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 3
+            }
+          ]
+        },
+        {
+          "name": "colors",
+          "label": "ألوان",
+          "type": "radio",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 3,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "full",
+              "label": "كاملة",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            },
+            {
+              "value": "single",
+              "label": "لون واحد",
+              "fixed_price": 0,
+              "unit_price": -3,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 2
+            }
+          ]
+        }
+      ],
+      "volume_discounts": [
+        {
+          "min_qty": 250,
+          "max_qty": 499,
+          "discount_basis_points": 500,
+          "added_production_days": 0
+        },
+        {
+          "min_qty": 500,
+          "max_qty": 999999,
+          "discount_basis_points": 800,
+          "added_production_days": 0
+        }
+      ]
+    },
+    {
+      "name": "بلوكنوتات / أجندات",
+      "description": "بلوكنوتات / أجندات",
+      "pricing_method": "attributes_only",
+      "base_price_fixed": 0,
+      "base_price_unit": 0,
+      "base_price_multiplier": 0,
+      "min_quantity": 10,
+      "quantity_step": 10,
+      "min_chargeable_area": 0,
+      "min_chargeable_price": 0,
+      "is_active": true,
+      "requires_upload": true,
+      "upload_categories": [
+        "cover"
+      ],
+      "standard_roll_sizes": null,
+      "max_print_width": null,
+      "max_print_length": null,
+      "bleed_margin": 0,
+      "safe_zone": 0,
+      "thickness_factor": 0,
+      "base_production_days": 5,
+      "sort_order": 7,
+      "allow_custom_name": true,
+      "attributes": [
+        {
+          "name": "size",
+          "label": "المقاس",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 1,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "a6",
+              "label": "A6",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            },
+            {
+              "value": "a5",
+              "label": "A5",
+              "fixed_price": 300,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 2
+            },
+            {
+              "value": "a4",
+              "label": "A4",
+              "fixed_price": 700,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 3
+            }
+          ]
+        },
+        {
+          "name": "pages",
+          "label": "عدد صفحات",
+          "type": "multiplier_number",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 2,
+          "min_value": 25,
+          "max_value": 200,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "sheet",
+              "label": "ورقة",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 8,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            }
+          ]
+        },
+        {
+          "name": "inner_paper",
+          "label": "ورق داخلي",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 3,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "white80",
+              "label": "أبيض 80",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            },
+            {
+              "value": "lined",
+              "label": "مسطر",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 2,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 2
+            },
+            {
+              "value": "squares",
+              "label": "مربعات",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 2,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 3
+            }
+          ]
+        },
+        {
+          "name": "cover",
+          "label": "غلاف",
+          "type": "select",
+          "step": "specifications",
+          "is_required": true,
+          "sort_order": 4,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "hard",
+              "label": "كرتون مقوى",
+              "fixed_price": 500,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            },
+            {
+              "value": "leather",
+              "label": "جلد صناعي",
+              "fixed_price": 2000,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 2
+            },
+            {
+              "value": "cellophane",
+              "label": "سلوفان",
+              "fixed_price": 800,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 3
+            }
+          ]
+        },
+        {
+          "name": "binding",
+          "label": "تجليد",
+          "type": "select",
+          "step": "finishing",
+          "is_required": false,
+          "sort_order": 5,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "glue",
+              "label": "لاصق",
+              "fixed_price": 300,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            },
+            {
+              "value": "wire",
+              "label": "سلك",
+              "fixed_price": 500,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 2
+            },
+            {
+              "value": "zipper",
+              "label": "سوستة",
+              "fixed_price": 800,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 3
+            }
+          ]
+        },
+        {
+          "name": "cover_print",
+          "label": "طباعة الغلاف",
+          "type": "radio",
+          "step": "finishing",
+          "is_required": false,
+          "sort_order": 6,
+          "min_value": null,
+          "max_value": null,
+          "conditional_rules": null,
+          "linked_upload_category": null,
+          "is_dimension_width": false,
+          "is_dimension_length": false,
+          "values": [
+            {
+              "value": "single",
+              "label": "وجه",
+              "fixed_price": 0,
+              "unit_price": 0,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 1
+            },
+            {
+              "value": "double",
+              "label": "وجهين",
+              "fixed_price": 0,
+              "unit_price": 200,
+              "multiplier_price": 0,
+              "weight": 0,
+              "weight_type": "per_unit",
+              "tiered_prices": null,
+              "added_production_days": 0,
+              "required_upload_category": null,
+              "sort_order": 2
+            }
+          ]
+        }
+      ],
+      "volume_discounts": [
+        {
+          "min_qty": 25,
+          "max_qty": 49,
+          "discount_basis_points": 500,
+          "added_production_days": 0
+        },
+        {
+          "min_qty": 50,
+          "max_qty": 99,
+          "discount_basis_points": 800,
+          "added_production_days": 0
+        },
+        {
+          "min_qty": 100,
+          "max_qty": 999999,
+          "discount_basis_points": 1200,
+          "added_production_days": 0
+        }
+      ]
+    }
+  ]
+}
