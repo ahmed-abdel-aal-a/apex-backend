@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('cart_item_addons', function (Blueprint $table) {
-            $table->string('file_path')->nullable()->after('total');
-            $table->string('temp_file_id')->nullable()->after('file_path');
+            $table->string('file_path')->nullable();
+            $table->string('temp_file_id')->nullable();
         });
 
         Schema::table('order_item_addons', function (Blueprint $table) {
-            $table->string('file_path')->nullable()->after('total');
-            $table->string('temp_file_id')->nullable()->after('file_path');
+            $table->string('file_path')->nullable();
+            $table->string('temp_file_id')->nullable();
         });
     }
 
