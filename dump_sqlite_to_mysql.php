@@ -51,7 +51,7 @@ foreach ($tables as $tableObj) {
                 return "'" . addslashes((string)$val) . "'";
             }, array_values($array));
             
-            $sql = "INSERT INTO `{$table}` (" . implode(', ', $columns) . ") VALUES (" . implode(', ', $values) . ");\n";
+            $sql = "INSERT IGNORE INTO `{$table}` (" . implode(', ', $columns) . ") VALUES (" . implode(', ', $values) . ");\n";
             fwrite($handle, $sql);
         }
     }
