@@ -16,7 +16,7 @@ class PaymentGatewaysSeeder extends Seeder
             ['code' => 'kashier'],
             [
                 'name' => 'كاشير (Kashier)',
-                'type' => 'cards,wallets',
+                'type' => ['cards', 'wallets'],
                 'is_active' => false,
                 'is_configured' => false,
                 'credentials' => null,
@@ -27,7 +27,7 @@ class PaymentGatewaysSeeder extends Seeder
             ['code' => 'paymob'],
             [
                 'name' => 'باي موب (Paymob)',
-                'type' => 'cards,wallets',
+                'type' => ['cards', 'wallets'],
                 'is_active' => false,
                 'is_configured' => false,
                 'credentials' => null,
