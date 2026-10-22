@@ -11,7 +11,7 @@ class ProductAddonController extends Controller
 {
     public function index(AddonGroup $addon_group)
     {
-        return response()->json($addon_group->addons()->orderBy('sort_order')->get());
+        return response()->json($addon_group->addons()->orderBy('id')->get());
     }
 
     public function store(StoreProductAddonRequest $request, AddonGroup $addon_group)
