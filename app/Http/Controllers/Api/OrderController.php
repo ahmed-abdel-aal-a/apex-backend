@@ -381,23 +381,53 @@ class OrderController extends Controller
             ? $orderItem->uploaded_files 
             : (json_decode($orderItem->uploaded_files ?? '[]', true) ?: []);
 
-        if (!isset($uploadedFiles[$category]) || !is_string($uploadedFiles[$category]) || empty($uploadedFiles[$category])) {
+        $fileEntry = $uploadedFiles[$category] ?? null;
+        if (!$fileEntry) {
             abort(404, 'الملف المطلوب غير موجود في هذا الطلب.');
         }
 
-        $path = $uploadedFiles[$category];
+        $path = is_array($fileEntry) ? ($fileEntry['path'] ?? null) : $fileEntry;
+        $disk = is_array($fileEntry) ? ($fileEntry['disk'] ?? 'local') : 'local';
+        $fileName = is_array($fileEntry) ? ($fileEntry['name'] ?? basename($path)) : basename($path);
+
+        if (!is_string($path) || empty($path)) {
+            abort(404, 'الملف المطلوب غير موجود في هذا الطلب.');
+        }
+
+        // الحماية من الملفات المؤرشفة وفق سياسة الاحتفاظ (Retention Policy)
+        if ($path === 'deleted_by_retention' || $path === 'deleted_by_system' || $orderItem->file_status === 'cleaned_by_retention') {
+            abort(410, 'تم أرشفة وحذف هذا الملف تلقائياً لمرور أكثر من 14 يوماً على تسليم الطلب.');
+        }
 
         // الحماية الصارمة من ثغرات Path Traversal
         if (str_contains($path, '..') || str_starts_with($path, '/') || str_starts_with($path, '\\')) {
             abort(403, 'مسار الملف غير مسموح به أمنياً.');
         }
 
-        if (!Storage::disk('local')->exists($path)) {
-            abort(404, 'الملف غير موجود على القرص المحلي.');
+        if (!Storage::disk($disk)->exists($path)) {
+            abort(404, "الملف غير موجود على وحدة التخزين ({$disk}).");
         }
 
-        $fileName = basename($path);
-        return Storage::disk('local')->download($path, $fileName);
+        // إذا كان الملف مخزناً على Cloudflare R2، يتم استخدام رابط مؤقت (Presigned URL) لمدة 30 دقيقة
+        // للتحميل المباشر من سحابة Cloudflare بأقصى سرعة ودون استهلاك ذاكرة ووقت تشغيل PHP على السيرفر
+        // [RFC 6266]: استخدام rawurlencode لحماية ودعم أسماء الملفات العربية والأجنبية بشكل قياسي
+        if ($disk === 'r2') {
+            try {
+                $encodedFileName = rawurlencode($fileName);
+                $asciiFallback = preg_replace('/[^\x20-\x7e]/', '_', $fileName) ?: 'download';
+                $contentDisposition = "attachment; filename=\"{$asciiFallback}\"; filename*=UTF-8''{$encodedFileName}";
+
+                $tempUrl = Storage::disk('r2')->temporaryUrl($path, now()->addMinutes(30), [
+                    'ResponseContentDisposition' => $contentDisposition
+                ]);
+                return redirect()->away($tempUrl);
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning("R2 temporaryUrl generation failed, falling back to stream download: " . $e->getMessage());
+                return Storage::disk('r2')->download($path, $fileName);
+            }
+        }
+
+        return Storage::disk($disk)->download($path, $fileName);
     }
 
     /**

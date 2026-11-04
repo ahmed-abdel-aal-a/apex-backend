@@ -1,5 +1,10 @@
 <?php
 
+$r2Configured = !empty(env('CLOUDFLARE_R2_ACCESS_KEY_ID')) &&
+                !empty(env('CLOUDFLARE_R2_SECRET_ACCESS_KEY')) &&
+                !empty(env('CLOUDFLARE_R2_BUCKET')) &&
+                !empty(env('CLOUDFLARE_R2_ENDPOINT'));
+
 return [
 
     /*
@@ -14,6 +19,19 @@ return [
     */
 
     'default' => env('FILESYSTEM_DISK', 'local'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default Printing Storage Disk (R2 with Smart Fallback to Local)
+    |--------------------------------------------------------------------------
+    |
+    | Used for print orders and files. If Cloudflare R2 credentials are fully
+    | configured and PRINT_STORAGE_DISK is 'r2', it uses 'r2'.
+    | Otherwise, it safely and automatically falls back to 'local'.
+    |
+    */
+
+    'default_print_disk' => ($r2Configured && env('PRINT_STORAGE_DISK', 'r2') === 'r2') ? 'r2' : 'local',
 
     /*
     |--------------------------------------------------------------------------
@@ -56,6 +74,19 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
+            'throw' => false,
+            'report' => false,
+        ],
+
+        'r2' => [
+            'driver' => 's3',
+            'key' => env('CLOUDFLARE_R2_ACCESS_KEY_ID'),
+            'secret' => env('CLOUDFLARE_R2_SECRET_ACCESS_KEY'),
+            'region' => env('CLOUDFLARE_R2_REGION', 'auto'),
+            'bucket' => env('CLOUDFLARE_R2_BUCKET'),
+            'url' => env('CLOUDFLARE_R2_URL'),
+            'endpoint' => env('CLOUDFLARE_R2_ENDPOINT'),
+            'use_path_style_endpoint' => env('CLOUDFLARE_R2_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => false,
             'report' => false,
         ],

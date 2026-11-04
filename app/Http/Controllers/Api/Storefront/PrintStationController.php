@@ -117,12 +117,27 @@ class PrintStationController extends Controller
             }
         }
 
-        $path = $file->store('temp_uploads', 'local');
+        $originalExt = strtolower(ltrim($file->getClientOriginalExtension(), '.'));
+        $originalName = $file->getClientOriginalName();
+        $fileSize = $file->getSize();
+
+        // [Phase 4: Cloudflare R2 Zero-Network-Copy Storage]
+        // Upload directly to permanent organized UUID path on active print disk
+        $disk = config('filesystems.default_print_disk', 'local');
+        $year = date('Y');
+        $month = date('m');
+        $dir = "print_uploads/{$year}/{$month}";
+        $storedFilename = (string)\Illuminate\Support\Str::uuid() . '.' . ($originalExt ?: 'bin');
+        $path = $file->storeAs($dir, $storedFilename, $disk);
 
         $tempUpload = \App\Models\TemporaryUpload::create([
             'session_id' => $request->session_id,
             'user_id' => $request->user_id,
             'file_path' => $path,
+            'disk' => $disk,
+            'original_extension' => $originalExt,
+            'original_name' => $originalName,
+            'file_size' => $fileSize,
             'category' => $request->category,
             'page_count' => $pageCount,
         ]);
@@ -131,6 +146,7 @@ class PrintStationController extends Controller
             'file_id' => $tempUpload->id,
             'page_count' => $pageCount,
             'category' => $tempUpload->category,
+            'disk' => $disk,
         ]);
     }
 
@@ -205,36 +221,112 @@ class PrintStationController extends Controller
                     'length_mm' => $validated['length_mm'] ?? null,
                     'image_count' => $validated['image_count'] ?? 1,
                     'notes' => $validated['notes'] ?? null,
+                    'production_days' => (int)($pricing['production_days'] ?? 1),
                 ];
 
                 // اعتماد الملف فوراً بعد اجتياز الفحص الأمني اللحظي (MIME + Magic Bytes + Zip Bomb + PDF Parser)
                 $cartItem->file_status = 'approved';
                 $cartItem->uploaded_files = [];
 
+                // 3. التحقق الصارم من الخانات الإجبارية والامتدادات المسموحة
+                $tempFileIds = $validated['temp_file_ids'] ?? [];
+                $tempFiles = collect();
+
+                if (!empty($tempFileIds)) {
+                    $tempFiles = \App\Models\TemporaryUpload::whereIn('id', $tempFileIds)
+                        ->where(function($q) use ($validated) {
+                            $q->where('session_id', $validated['session_id'])
+                              ->orWhere('user_id', auth()->id());
+                        })->get();
+
+                    if ($tempFiles->count() !== count($tempFileIds)) {
+                        throw \Illuminate\Validation\ValidationException::withMessages([
+                            'temp_file_ids' => ['أحد الملفات المرفوعة غير صالح أو منتهي الصلاحية، يرجى إعادة الرفع.']
+                        ]);
+                    }
+                }
+
+                $tempFilesByCategory = $tempFiles->keyBy('category');
+
+                if ($printingType && $printingType->requires_upload) {
+                    $configuredSlots = $printingType->upload_categories ?: [];
+                    foreach ($configuredSlots as $slot) {
+                        $slotId = $slot['id'];
+                        $slotLabel = $slot['label'] ?? $slotId;
+                        $isRequired = !empty($slot['is_required']);
+                        $rawAllowed = $slot['allowed_extensions'] ?? ['pdf', 'ai', 'psd', 'zip', 'rar'];
+                        $normalizedAllowed = array_map(fn($e) => strtolower(ltrim(trim($e), '.')), $rawAllowed);
+
+                        if ($isRequired && !isset($tempFilesByCategory[$slotId])) {
+                            throw \Illuminate\Validation\ValidationException::withMessages([
+                                'files' => ["الملف المطلوب ({$slotLabel}) لم يتم رفعه، يرجى إرفاقه للمتابعة."]
+                            ]);
+                        }
+
+                        if (isset($tempFilesByCategory[$slotId])) {
+                            $tempFile = $tempFilesByCategory[$slotId];
+                            $filePath = $tempFile->file_path;
+                            $fileExt = !empty($tempFile->original_extension)
+                                ? strtolower(ltrim(trim($tempFile->original_extension), '.'))
+                                : strtolower(ltrim(pathinfo($filePath, PATHINFO_EXTENSION), '.'));
+
+                            if (!in_array($fileExt, $normalizedAllowed)) {
+                                $allowedStr = implode(', ', array_map(fn($e) => '.' . $e, $normalizedAllowed));
+                                throw \Illuminate\Validation\ValidationException::withMessages([
+                                    'files' => ["امتداد الملف المرفوع لـ ({$slotLabel}) غير مدعوم ({$fileExt}). الصيغ المسموحة: {$allowedStr}"]
+                                ]);
+                            }
+                        }
+                    }
+                }
+
+                // فحص الخانات الإضافية المطلوبة بناءً على الخيارات والتشطيب المحدد
+                if (!empty($validated['selected_options'])) {
+                    $selectedValIds = collect($validated['selected_options'])->pluck('value_id')->filter()->toArray();
+                    $dynamicRequiredCategories = \App\Models\PrintingAttributeValue::whereIn('id', $selectedValIds)
+                        ->whereNotNull('required_upload_category')
+                        ->where('required_upload_category', '!=', '')
+                        ->pluck('required_upload_category', 'label')
+                        ->toArray();
+
+                    foreach ($dynamicRequiredCategories as $valLabel => $reqCat) {
+                        if (!isset($tempFilesByCategory[$reqCat])) {
+                            throw \Illuminate\Validation\ValidationException::withMessages([
+                                'files' => ["اختيار ({$valLabel}) يتطلب رفع ملف مخصص له ({$reqCat})."]
+                            ]);
+                        }
+                    }
+                }
+
                 // تنفيذ الحفظ بأمان
                 $cartItem->save();
 
+                // [Phase 4: Zero-Network-Copy Strategy]
+                // Files are already located permanently at print_uploads/{Y}/{m}/{uuid}.{ext}
+                // We link metadata directly without expensive remote network copy operations.
                 $uploadedFilesArr = [];
-                $tempFileIds = $validated['temp_file_ids'] ?? [];
+                if (!$tempFiles->isEmpty()) {
+                    foreach ($tempFiles as $tempFile) {
+                        $fileDisk = $tempFile->disk ?? config('filesystems.default_print_disk', 'local');
+                        $filePath = $tempFile->file_path;
 
-                if (!empty($tempFileIds)) {
-                    foreach ($tempFileIds as $fileId) {
-                        $tempFile = \App\Models\TemporaryUpload::where('id', $fileId)
-                            ->where(function($q) use ($validated) {
-                                $q->where('session_id', $validated['session_id'])
-                                  ->orWhere('user_id', auth()->id());
-                            })->first();
-
-                        if (!$tempFile) {
-                            throw new \Exception("Invalid or unauthorized file ID: {$fileId}");
+                        // Legacy fallback: if an older local upload was placed in temp_uploads/
+                        if ($fileDisk === 'local' && str_starts_with($filePath, 'temp_uploads/')) {
+                            if (\Illuminate\Support\Facades\Storage::disk('local')->exists($filePath)) {
+                                $newPath = 'print_jobs/' . $cartItem->id . '/' . basename($filePath);
+                                \Illuminate\Support\Facades\Storage::disk('local')->move($filePath, $newPath);
+                                $movedFiles[] = ['disk' => 'local', 'from' => $filePath, 'to' => $newPath];
+                                $filePath = $newPath;
+                            }
                         }
 
-                        if (\Illuminate\Support\Facades\Storage::disk('local')->exists($tempFile->file_path)) {
-                            $newPath = 'print_jobs/' . $cartItem->id . '/' . basename($tempFile->file_path);
-                            \Illuminate\Support\Facades\Storage::disk('local')->move($tempFile->file_path, $newPath);
-                            $movedFiles[] = ['from' => $tempFile->file_path, 'to' => $newPath];
-                            $uploadedFilesArr[$tempFile->category] = $newPath;
-                        }
+                        $uploadedFilesArr[$tempFile->category] = [
+                            'path' => $filePath,
+                            'disk' => $fileDisk,
+                            'name' => $tempFile->original_name ?? basename($filePath),
+                            'page_count' => $tempFile->page_count,
+                            'size' => $tempFile->file_size,
+                        ];
                         
                         $tempFile->delete();
                     }
@@ -246,8 +338,10 @@ class PrintStationController extends Controller
 
                 // فحص Ghostscript غير متزامن إضافي فقط في حال تفعيله صراحة من الإعدادات
                 if (config('services.ghostscript.enabled') === true && !empty($uploadedFilesArr)) {
-                    foreach ($uploadedFilesArr as $filePath) {
-                        if (str_ends_with(strtolower($filePath), '.pdf')) {
+                    foreach ($uploadedFilesArr as $fileData) {
+                        $filePath = is_array($fileData) ? ($fileData['path'] ?? null) : $fileData;
+                        $fileDisk = is_array($fileData) ? ($fileData['disk'] ?? 'local') : 'local';
+                        if ($fileDisk === 'local' && is_string($filePath) && str_ends_with(strtolower($filePath), '.pdf')) {
                             ValidatePrintFileJob::dispatch($cartItem->id, $filePath);
                         }
                     }
@@ -256,10 +350,11 @@ class PrintStationController extends Controller
                 return response()->json(['message' => 'Job added to cart successfully', 'cart_item_id' => $cartItem->id]);
             });
         } catch (\Exception $e) {
-            // File System Rollback
+            // File System Rollback for legacy moved local files
             foreach ($movedFiles as $file) {
-                if (\Illuminate\Support\Facades\Storage::disk('local')->exists($file['to'])) {
-                    \Illuminate\Support\Facades\Storage::disk('local')->move($file['to'], $file['from']);
+                $mDisk = $file['disk'] ?? 'local';
+                if (\Illuminate\Support\Facades\Storage::disk($mDisk)->exists($file['to'])) {
+                    \Illuminate\Support\Facades\Storage::disk($mDisk)->move($file['to'], $file['from']);
                 }
             }
             throw $e;
@@ -301,12 +396,16 @@ class PrintStationController extends Controller
             ? $cartItem->uploaded_files
             : (json_decode($cartItem->uploaded_files ?? '[]', true) ?: []);
 
-        if (isset($uploadedFiles[$category]) && is_string($uploadedFiles[$category]) && !empty($uploadedFiles[$category])) {
-            $filePath = $uploadedFiles[$category];
+        $fileEntry = $uploadedFiles[$category] ?? null;
+        if ($fileEntry) {
+            $filePath = is_array($fileEntry) ? ($fileEntry['path'] ?? null) : $fileEntry;
+            $fileDisk = is_array($fileEntry) ? ($fileEntry['disk'] ?? 'local') : 'local';
 
-            // الحذف الفعلي والآمن للملف من القرص المحلي local
-            if (\Illuminate\Support\Facades\Storage::disk('local')->exists($filePath)) {
-                \Illuminate\Support\Facades\Storage::disk('local')->delete($filePath);
+            // الحذف الفعلي والآمن للملف من القرص المسجل (r2 أو local)
+            if (is_string($filePath) && !empty($filePath)) {
+                if (\Illuminate\Support\Facades\Storage::disk($fileDisk)->exists($filePath)) {
+                    \Illuminate\Support\Facades\Storage::disk($fileDisk)->delete($filePath);
+                }
             }
 
             // إزالة الفئة من القاموس وتحديث قاعدة البيانات

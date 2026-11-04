@@ -36,6 +36,7 @@ class PrintingTypeController extends Controller
             'requires_upload' => 'boolean',
             'upload_rules' => 'nullable|array',
             'upload_categories' => 'nullable|array',
+            'upload_categories.*' => 'nullable',
             'standard_roll_sizes' => 'nullable|array',
             'max_print_width' => 'nullable|integer',
             'max_print_length' => 'nullable|integer',
@@ -45,6 +46,21 @@ class PrintingTypeController extends Controller
             'base_production_days' => 'integer|min:1',
             'sort_order' => 'integer'
         ]);
+
+        $requiresUpload = $validated['requires_upload'] ?? false;
+        if (array_key_exists('upload_categories', $validated)) {
+            $validated['upload_categories'] = PrintingType::normalizeUploadCategories($validated['upload_categories']);
+        }
+
+        if ($requiresUpload) {
+            $slots = $validated['upload_categories'] ?? [];
+            $hasRequiredSlot = collect($slots)->contains(fn($s) => !empty($s['is_required']));
+            if (!$hasRequiredSlot) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'upload_categories' => ['طالما يتطلب المنتج رفع ملفات، يجب تحديد خانة رفع واحدة على الأقل كخانة إلزامية.']
+                ]);
+            }
+        }
 
         $type = PrintingType::create($validated);
         return response()->json($type, 201);
@@ -74,6 +90,7 @@ class PrintingTypeController extends Controller
             'requires_upload' => 'boolean',
             'upload_rules' => 'nullable|array',
             'upload_categories' => 'nullable|array',
+            'upload_categories.*' => 'nullable',
             'standard_roll_sizes' => 'nullable|array',
             'max_print_width' => 'nullable|integer',
             'max_print_length' => 'nullable|integer',
@@ -83,6 +100,24 @@ class PrintingTypeController extends Controller
             'base_production_days' => 'integer|min:1',
             'sort_order' => 'integer'
         ]);
+
+        $requiresUpload = array_key_exists('requires_upload', $validated) 
+            ? (bool)$validated['requires_upload'] 
+            : (bool)$printingType->requires_upload;
+
+        if (array_key_exists('upload_categories', $validated)) {
+            $validated['upload_categories'] = PrintingType::normalizeUploadCategories($validated['upload_categories']);
+        }
+
+        if ($requiresUpload) {
+            $slots = $validated['upload_categories'] ?? $printingType->upload_categories ?? [];
+            $hasRequiredSlot = collect($slots)->contains(fn($s) => !empty($s['is_required']));
+            if (!$hasRequiredSlot) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'upload_categories' => ['طالما يتطلب المنتج رفع ملفات، يجب تحديد خانة رفع واحدة على الأقل كخانة إلزامية.']
+                ]);
+            }
+        }
 
         $printingType->update($validated);
         return response()->json($printingType);

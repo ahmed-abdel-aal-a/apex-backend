@@ -14,6 +14,10 @@ class TemporaryUpload extends Model
         'session_id',
         'user_id',
         'file_path',
+        'disk',
+        'original_extension',
+        'original_name',
+        'file_size',
         'category',
         'page_count',
     ];

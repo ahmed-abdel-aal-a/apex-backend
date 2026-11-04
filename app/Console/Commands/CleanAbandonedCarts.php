@@ -49,13 +49,14 @@ class CleanAbandonedCarts extends Command
                 if (is_array($files)) {
                     foreach ($files as $fileData) {
                         $path = is_array($fileData) ? ($fileData['path'] ?? null) : $fileData;
+                        $disk = is_array($fileData) ? ($fileData['disk'] ?? 'local') : 'local';
                         if (is_string($path) && !empty($path)) {
                             // Strict Protection Gate: Never delete files referenced in any order item
                             $isReferencedInOrder = \App\Models\OrderItem::where('uploaded_files', 'like', "%{$path}%")->exists()
                                 || \App\Models\OrderItemAddon::where('file_paths', 'like', "%{$path}%")->exists();
 
-                            if (!$isReferencedInOrder && Storage::disk('local')->exists($path)) {
-                                Storage::disk('local')->delete($path);
+                            if (!$isReferencedInOrder && Storage::disk($disk)->exists($path)) {
+                                Storage::disk($disk)->delete($path);
                                 $fileCount++;
                             }
                         }

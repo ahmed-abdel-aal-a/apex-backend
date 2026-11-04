@@ -35,8 +35,9 @@ class CleanOrphanedUploads extends Command
         foreach ($orphans as $upload) {
             $isReferenced = \App\Models\OrderItem::where('uploaded_files', 'like', "%{$upload->file_path}%")->exists()
                 || \App\Models\OrderItemAddon::where('file_paths', 'like', "%{$upload->file_path}%")->exists();
-            if (!$isReferenced && Storage::disk('local')->exists($upload->file_path)) {
-                Storage::disk('local')->delete($upload->file_path);
+            $disk = $upload->disk ?? 'local';
+            if (!$isReferenced && Storage::disk($disk)->exists($upload->file_path)) {
+                Storage::disk($disk)->delete($upload->file_path);
             }
             $upload->delete();
         }
@@ -63,13 +64,14 @@ class CleanOrphanedUploads extends Command
             if (is_array($files)) {
                 foreach ($files as $fileData) {
                     $path = is_array($fileData) ? ($fileData['path'] ?? null) : $fileData;
+                    $disk = is_array($fileData) ? ($fileData['disk'] ?? 'local') : 'local';
                     if (is_string($path) && !empty($path)) {
                         // Strict Protection Gate: Never delete if referenced in ANY order item
                         $isReferencedInOrder = \App\Models\OrderItem::where('uploaded_files', 'like', "%{$path}%")->exists()
                             || \App\Models\OrderItemAddon::where('file_paths', 'like', "%{$path}%")->exists();
                         
-                        if (!$isReferencedInOrder && Storage::disk('local')->exists($path)) {
-                            Storage::disk('local')->delete($path);
+                        if (!$isReferencedInOrder && Storage::disk($disk)->exists($path)) {
+                            Storage::disk($disk)->delete($path);
                             $hasDeleted = true;
                             $cartFilesCount++;
                         }

@@ -31,6 +31,7 @@ class PrintPricingService
         $sumMultiplier = '0';
         $sumWeightPhysical = '0'; // in grams
         $thicknessMultiplier = 1;
+        $totalProductionDays = max(1, (int)($type->base_production_days ?? 1));
         
         $valueIds = collect($selectedOptions)->pluck('value_id')->filter()->unique()->toArray();
         $values = PrintingAttributeValue::whereIn('id', $valueIds)
@@ -42,6 +43,10 @@ class PrintPricingService
             $value = $values->get($option['value_id'] ?? null);
             if (!$value) continue;
             
+            if (!empty($value->added_production_days) && (int)$value->added_production_days > 0) {
+                $totalProductionDays += (int)$value->added_production_days;
+            }
+
             $sumFixed = bcadd($sumFixed, (string)$value->fixed_price);
             $sumUnit = bcadd($sumUnit, (string)$value->unit_price);
             
@@ -116,6 +121,9 @@ class PrintPricingService
             ->first();
             
         if ($discount) {
+            if (!empty($discount->added_production_days) && (int)$discount->added_production_days > 0) {
+                $totalProductionDays += (int)$discount->added_production_days;
+            }
             $discountRaw = bcdiv(bcmul($subtotal, (string)$discount->discount_basis_points, 4), '10000', 4);
             $discountAmount = bcceil($discountRaw);
         }
@@ -152,6 +160,7 @@ class PrintPricingService
             'tax_amount' => $taxAmount,
             'final_total' => $finalTotal,
             'final_price_egp' => $finalPriceEgp,
+            'production_days' => (int)$totalProductionDays,
             'physical_weight_kg' => (float)$physicalWeightKg,
             'volumetric_weight_kg' => (float)$volumetricWeightKg,
             'billable_weight_kg' => (float)$billableWeightKg,

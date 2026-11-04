@@ -116,10 +116,37 @@ class CheckoutController extends Controller
                     }
 
                     // [V14 Security Fix] Backend Pre-Payment Validation
-                    if ($typeModel->requires_upload && $cartItem->file_status !== 'approved') {
-                        throw ValidationException::withMessages([
-                            'cart' => "لا يمكن إتمام الطلب، الملف المرفوع للمنتج غير معتمد أو جاري فحصه."
-                        ]);
+                    if ($typeModel->requires_upload) {
+                        if ($cartItem->file_status !== 'approved') {
+                            throw ValidationException::withMessages([
+                                'cart' => "لا يمكن إتمام الطلب، الملف المرفوع للمنتج غير معتمد أو جاري فحصه."
+                            ]);
+                        }
+
+                        $uploadedFiles = is_array($cartItem->uploaded_files) 
+                            ? $cartItem->uploaded_files 
+                            : (json_decode($cartItem->uploaded_files ?? '[]', true) ?: []);
+
+                        $configuredSlots = $typeModel->upload_categories ?: [];
+                        foreach ($configuredSlots as $slot) {
+                            $slotId = $slot['id'];
+                            $slotLabel = $slot['label'] ?? $slotId;
+                            $isRequired = !empty($slot['is_required']);
+                            
+                            if ($isRequired) {
+                                $filePath = is_array($uploadedFiles[$slotId] ?? null) 
+                                    ? ($uploadedFiles[$slotId]['path'] ?? null) 
+                                    : ($uploadedFiles[$slotId] ?? null);
+
+                                if (empty($filePath)) {
+                                    throw ValidationException::withMessages([
+                                        'cart' => "لا يمكن إتمام الطلب، ملف ({$slotLabel}) إجباري لمنتج الطباعة ولم يتم إرفاقه. يرجى الرجوع إلى السلة لإرفاق الملف المطلوب.",
+                                        'error_code' => 'MISSING_REQUIRED_PRINT_FILE',
+                                        'redirect_url' => '/cart',
+                                    ]);
+                                }
+                            }
+                        }
                     }
 
                     // [V14.1 Financial Precision & Security Fix]
@@ -465,39 +492,49 @@ class CheckoutController extends Controller
                 $addons = $data['addons'] ?? [];
                 unset($data['addons']);
 
-                // [P0 Architectural Security Fix] عزل ونقل ملفات الطباعة لمجلد الطلب المحمي لمنع الحذف
+                // [Phase 4: Zero-Network-Copy Strategy]
+                // Files on R2 or already structured in print_uploads/ are permanently secured by UUID
+                // and linked instantly without expensive network move/copy operations that cause timeouts.
                 if (($data['item_type'] ?? '') === 'printing' && !empty($data['uploaded_files'])) {
                     $rawFiles = is_array($data['uploaded_files']) 
                         ? $data['uploaded_files'] 
                         : (json_decode($data['uploaded_files'], true) ?: []);
-                    $movedFiles = [];
+                    $processedFiles = [];
                     foreach ($rawFiles as $cat => $fileEntry) {
                         $filePath = is_array($fileEntry) ? ($fileEntry['path'] ?? null) : $fileEntry;
+                        $fileDisk = is_array($fileEntry) ? ($fileEntry['disk'] ?? 'local') : 'local';
+
                         if (is_string($filePath) && !empty($filePath)) {
-                            try {
-                                if (\Illuminate\Support\Facades\Storage::disk('local')->exists($filePath)) {
-                                    $newDir = 'order_print_jobs/' . $order->id;
-                                    $newPath = $newDir . '/' . basename($filePath);
-                                    \Illuminate\Support\Facades\Storage::disk('local')->move($filePath, $newPath);
-                                    if (is_array($fileEntry)) {
-                                        $fileEntry['path'] = $newPath;
-                                        $movedFiles[$cat] = $fileEntry;
+                            // Zero-Network-Copy: If file is on R2 or already organized in print_uploads/, skip physical move
+                            if ($fileDisk === 'r2' || str_starts_with($filePath, 'print_uploads/')) {
+                                $processedFiles[$cat] = $fileEntry;
+                            } else {
+                                // Legacy local file migration into order_print_jobs/
+                                try {
+                                    if (\Illuminate\Support\Facades\Storage::disk($fileDisk)->exists($filePath)) {
+                                        $newDir = 'order_print_jobs/' . $order->id;
+                                        $newPath = $newDir . '/' . basename($filePath);
+                                        \Illuminate\Support\Facades\Storage::disk($fileDisk)->move($filePath, $newPath);
+                                        if (is_array($fileEntry)) {
+                                            $fileEntry['path'] = $newPath;
+                                            $processedFiles[$cat] = $fileEntry;
+                                        } else {
+                                            $processedFiles[$cat] = $newPath;
+                                        }
                                     } else {
-                                        $movedFiles[$cat] = $newPath;
+                                        \Illuminate\Support\Facades\Log::warning("Checkout: Print file not found on disk {$fileDisk}: {$filePath} for order {$order->id}");
+                                        $processedFiles[$cat] = $fileEntry;
                                     }
-                                } else {
-                                    \Illuminate\Support\Facades\Log::warning("Checkout: Print file not found on disk: {$filePath} for order {$order->id}");
-                                    $movedFiles[$cat] = $fileEntry;
+                                } catch (\Throwable $e) {
+                                    \Illuminate\Support\Facades\Log::warning("Checkout: Failed to move print file {$filePath} on disk {$fileDisk} for order {$order->id}: " . $e->getMessage());
+                                    $processedFiles[$cat] = $fileEntry;
                                 }
-                            } catch (\Throwable $e) {
-                                \Illuminate\Support\Facades\Log::warning("Checkout: Failed to move print file {$filePath} for order {$order->id}: " . $e->getMessage());
-                                $movedFiles[$cat] = $fileEntry;
                             }
                         } else {
-                            $movedFiles[$cat] = $fileEntry;
+                            $processedFiles[$cat] = $fileEntry;
                         }
                     }
-                    $data['uploaded_files'] = $movedFiles;
+                    $data['uploaded_files'] = $processedFiles;
                 }
 
                 $orderItem = $order->items()->create($data);
