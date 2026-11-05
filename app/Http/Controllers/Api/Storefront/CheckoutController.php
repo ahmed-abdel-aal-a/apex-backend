@@ -71,6 +71,7 @@ class CheckoutController extends Controller
         }
 
         $copiedAddonFilePaths = [];
+        $tempUploadIdsToDelete = [];
 
         try {
             DB::beginTransaction();
@@ -540,21 +541,27 @@ class CheckoutController extends Controller
                 $orderItem = $order->items()->create($data);
                 
                 foreach ($addons as $addonData) {
-                    $savedFilePaths = [];
-                    $disk = config('filesystems.default');
+                    $savedFileMetadata = [];
+                    $addonDisk = config('filesystems.default_print_disk', 'local');
 
+                    // [Phase 4 / V15.2: Zero-Network-Copy Strategy for Addon Files]
+                    // نحتفظ بمسار الملف الدائم في السحابة مع الميتاداتا الكاملة (الاسم الأصلي، الحجم، الديسك)
+                    // لدعم معيار RFC 6266 ومنع محاولة النسخ الفاشلة عبر الشبكة
                     if (!empty($addonData['temp_file_ids'])) {
                         foreach ($addonData['temp_file_ids'] as $tempId) {
                             $tempUpload = \App\Models\TemporaryUpload::find($tempId);
-                            $uploadDisk = $tempUpload->disk ?? config('filesystems.default');
-                            
-                            if ($tempUpload && \Illuminate\Support\Facades\Storage::disk($uploadDisk)->exists($tempUpload->file_path)) {
-                                $newFilename = \Illuminate\Support\Str::random(10) . '_' . basename($tempUpload->file_path);
-                                $newPath = 'addon_uploads/' . $newFilename;
-                                
-                                \Illuminate\Support\Facades\Storage::disk($disk)->copy($tempUpload->file_path, $newPath);
-                                $savedFilePaths[] = $newPath;
-                                $copiedAddonFilePaths[] = ['disk' => $disk, 'path' => $newPath];
+                            if ($tempUpload) {
+                                $uploadDisk = $tempUpload->disk ?? config('filesystems.default_print_disk', 'local');
+                                if (\Illuminate\Support\Facades\Storage::disk($uploadDisk)->exists($tempUpload->file_path)) {
+                                    $savedFileMetadata[] = [
+                                        'path' => $tempUpload->file_path,
+                                        'disk' => $uploadDisk,
+                                        'name' => $tempUpload->original_name ?? basename($tempUpload->file_path),
+                                        'size' => (int)($tempUpload->file_size ?? 0),
+                                    ];
+                                    $addonDisk = $uploadDisk;
+                                    $tempUploadIdsToDelete[] = $tempUpload->id;
+                                }
                             }
                         }
                     }
@@ -571,8 +578,8 @@ class CheckoutController extends Controller
                         'price_snapshot' => $addonData['price_at_purchase'],
                         'price_type_snapshot' => $addonData['price_type'],
                         'quantity' => $addonQty,
-                        'disk' => $disk,
-                        'file_paths' => !empty($savedFilePaths) ? $savedFilePaths : null,
+                        'disk' => $addonDisk,
+                        'file_paths' => !empty($savedFileMetadata) ? $savedFileMetadata : null,
                     ]);
                 }
             }
@@ -701,6 +708,16 @@ class CheckoutController extends Controller
             }
 
             DB::commit();
+
+            // [Zero-Network-Copy Post-Commit Cleanup]
+            // حذف سجلات الرفع المؤقت فقط بعد نجاح المعاملة لضمان عدم ضياعها في حالة حدوث Rollback
+            if (!empty($tempUploadIdsToDelete)) {
+                try {
+                    \App\Models\TemporaryUpload::whereIn('id', $tempUploadIdsToDelete)->delete();
+                } catch (\Throwable $e) {
+                    \Illuminate\Support\Facades\Log::warning("Checkout: Failed to delete temporary uploads after commit: " . $e->getMessage());
+                }
+            }
 
             // إرسال إشعار لحظي لمديري النظام (Super Admins)
             try {

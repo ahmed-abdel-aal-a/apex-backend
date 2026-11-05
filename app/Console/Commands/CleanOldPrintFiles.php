@@ -91,7 +91,26 @@ class CleanOldPrintFiles extends Command
                     $disk = $temp->disk ?? 'local';
 
                     if (is_string($path) && !empty($path)) {
-                        if (!$this->isFileProtected($path)) {
+                        // Check protection using path and fileBase
+                        $isProtected = $this->isFileProtected($path);
+
+                        // Also verify if $temp->id is linked in any active cart addon
+                        if (!$isProtected) {
+                            $isTempIdInActiveCart = \App\Models\CartItemAddon::whereHas('cartItem.cart', function ($q) {
+                                $q->whereIn('status', ['active', 'pending'])
+                                  ->where('updated_at', '>=', Carbon::now()->subDays(14));
+                            })->where(function ($q) use ($temp) {
+                                $q->whereJsonContains('temp_file_ids', (string)$temp->id)
+                                  ->orWhereJsonContains('temp_file_ids', $temp->id)
+                                  ->orWhere('temp_file_ids', 'like', '%"' . $temp->id . '"%');
+                            })->exists();
+
+                            if ($isTempIdInActiveCart) {
+                                $isProtected = true;
+                            }
+                        }
+
+                        if (!$isProtected) {
                             if (Storage::disk($disk)->exists($path)) {
                                 $size = (int)($temp->file_size ?: 0);
                                 if ($size === 0) {
@@ -198,62 +217,113 @@ class CleanOldPrintFiles extends Command
         $orderCutoff = Carbon::now()->subDays($days);
         Order::whereIn('status', ['delivered', 'completed'])
             ->where('updated_at', '<', $orderCutoff)
-            ->whereHas('items', function ($q) {
-                $q->where('item_type', 'printing')
-                  ->where('file_status', '!=', 'cleaned_by_retention')
-                  ->whereNotNull('uploaded_files');
+            ->where(function ($q) {
+                $q->whereHas('items', function ($itemQ) {
+                    $itemQ->where('item_type', 'printing')
+                          ->where('file_status', '!=', 'cleaned_by_retention')
+                          ->whereNotNull('uploaded_files');
+                })->orWhereHas('items.addons', function ($addonQ) {
+                    $addonQ->whereNotNull('file_paths')
+                           ->where('file_paths', 'not like', '%deleted_by_retention%');
+                });
             })
+            ->with(['items.addons'])
             ->chunkById(100, function ($orders) use ($dryRun, &$deletedOrderFiles, &$freedBytes) {
                 foreach ($orders as $order) {
                     foreach ($order->items as $item) {
-                        if ($item->item_type !== 'printing' || $item->file_status === 'cleaned_by_retention' || empty($item->uploaded_files)) {
-                            continue;
-                        }
+                        // 1. Archive print item files
+                        if ($item->item_type === 'printing' && $item->file_status !== 'cleaned_by_retention' && !empty($item->uploaded_files)) {
+                            $files = is_array($item->uploaded_files) 
+                                ? $item->uploaded_files 
+                                : (json_decode($item->uploaded_files, true) ?: []);
 
-                        $files = is_array($item->uploaded_files) 
-                            ? $item->uploaded_files 
-                            : (json_decode($item->uploaded_files, true) ?: []);
+                            if (is_array($files)) {
+                                $modified = false;
+                                foreach ($files as $category => $fileData) {
+                                    $path = is_array($fileData) ? ($fileData['path'] ?? null) : $fileData;
+                                    $disk = is_array($fileData) ? ($fileData['disk'] ?? 'local') : 'local';
 
-                        if (!is_array($files)) {
-                            continue;
-                        }
+                                    if (!is_string($path) || empty($path) || $path === 'deleted_by_retention' || $path === 'deleted_by_system') {
+                                        continue;
+                                    }
 
-                        $modified = false;
-                        foreach ($files as $category => $fileData) {
-                            $path = is_array($fileData) ? ($fileData['path'] ?? null) : $fileData;
-                            $disk = is_array($fileData) ? ($fileData['disk'] ?? 'local') : 'local';
+                                    if (Storage::disk($disk)->exists($path)) {
+                                        $size = (is_array($fileData) && !empty($fileData['size'])) ? (int)$fileData['size'] : 0;
+                                        if ($size === 0) {
+                                            try {
+                                                $size = (int)Storage::disk($disk)->size($path);
+                                            } catch (\Throwable $e) {}
+                                        }
 
-                            if (!is_string($path) || empty($path) || $path === 'deleted_by_retention' || $path === 'deleted_by_system') {
-                                continue;
-                            }
+                                        if (!$dryRun) {
+                                            Storage::disk($disk)->delete($path);
+                                        }
+                                        $freedBytes += $size;
+                                        $deletedOrderFiles++;
+                                        $modified = true;
+                                    }
 
-                            if (Storage::disk($disk)->exists($path)) {
-                                $size = (is_array($fileData) && !empty($fileData['size'])) ? (int)$fileData['size'] : 0;
-                                if ($size === 0) {
-                                    try {
-                                        $size = (int)Storage::disk($disk)->size($path);
-                                    } catch (\Throwable $e) {}
+                                    if (is_array($files[$category])) {
+                                        $files[$category]['path'] = 'deleted_by_retention';
+                                    } else {
+                                        $files[$category] = 'deleted_by_retention';
+                                    }
                                 }
 
-                                if (!$dryRun) {
-                                    Storage::disk($disk)->delete($path);
+                                if ($modified && !$dryRun) {
+                                    $item->uploaded_files = $files;
+                                    $item->file_status = 'cleaned_by_retention';
+                                    $item->save();
                                 }
-                                $freedBytes += $size;
-                                $deletedOrderFiles++;
-                                $modified = true;
-                            }
-
-                            if (is_array($files[$category])) {
-                                $files[$category]['path'] = 'deleted_by_retention';
-                            } else {
-                                $files[$category] = 'deleted_by_retention';
                             }
                         }
 
-                        if ($modified && !$dryRun) {
-                            $item->uploaded_files = $files;
-                            $item->file_status = 'cleaned_by_retention';
-                            $item->save();
+                        // 2. Archive order item addons files
+                        if ($item->addons->isNotEmpty()) {
+                            foreach ($item->addons as $addon) {
+                                $addonFiles = is_array($addon->file_paths)
+                                    ? $addon->file_paths
+                                    : (json_decode($addon->file_paths ?? '[]', true) ?: []);
+
+                                if (!empty($addonFiles) && is_array($addonFiles)) {
+                                    $addonModified = false;
+                                    foreach ($addonFiles as $aIdx => $aEntry) {
+                                        $aPath = is_array($aEntry) ? ($aEntry['path'] ?? null) : $aEntry;
+                                        $aDisk = is_array($aEntry) ? ($aEntry['disk'] ?? $addon->disk ?? 'local') : ($addon->disk ?? 'local');
+
+                                        if (!is_string($aPath) || empty($aPath) || $aPath === 'deleted_by_retention' || $aPath === 'deleted_by_system') {
+                                            continue;
+                                        }
+
+                                        if (Storage::disk($aDisk)->exists($aPath)) {
+                                            $aSize = (is_array($aEntry) && !empty($aEntry['size'])) ? (int)$aEntry['size'] : 0;
+                                            if ($aSize === 0) {
+                                                try {
+                                                    $aSize = (int)Storage::disk($aDisk)->size($aPath);
+                                                } catch (\Throwable $e) {}
+                                            }
+
+                                            if (!$dryRun) {
+                                                Storage::disk($aDisk)->delete($aPath);
+                                            }
+                                            $freedBytes += $aSize;
+                                            $deletedOrderFiles++;
+                                            $addonModified = true;
+                                        }
+
+                                        if (is_array($addonFiles[$aIdx])) {
+                                            $addonFiles[$aIdx]['path'] = 'deleted_by_retention';
+                                        } else {
+                                            $addonFiles[$aIdx] = 'deleted_by_retention';
+                                        }
+                                    }
+
+                                    if ($addonModified && !$dryRun) {
+                                        $addon->file_paths = $addonFiles;
+                                        $addon->save();
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -287,12 +357,18 @@ class CleanOldPrintFiles extends Command
     }
 
     /**
-     * Strict Safety Gate: Verify if file path is used in ANY order_items or active carts.
+     * Strict Safety Gate: Verify if file path or its basename is used in ANY order_items or active carts.
+     * Uses basename($path) to remain completely immune to JSON escaped slashes (\/).
      */
     protected function isFileProtected(string $path, int $excludeCartItemId = 0): bool
     {
+        $fileBase = basename($path);
+
         // 1. NEVER delete files referenced in ANY active / non-archived order_item
-        $inOrderItem = OrderItem::where('uploaded_files', 'like', "%{$path}%")
+        $inOrderItem = OrderItem::where(function($q) use ($path, $fileBase) {
+                $q->where('uploaded_files', 'like', "%{$path}%")
+                  ->orWhere('uploaded_files', 'like', "%{$fileBase}%");
+            })
             ->where('file_status', '!=', 'cleaned_by_retention')
             ->whereHas('order', function ($q) {
                 $q->whereNotIn('status', ['cancelled', 'expired']);
@@ -301,21 +377,49 @@ class CleanOldPrintFiles extends Command
             return true;
         }
 
-        // 2. NEVER delete files referenced in ANY order_item_addons
-        $inOrderAddon = OrderItemAddon::where('file_paths', 'like', "%{$path}%")->exists();
+        // 2. NEVER delete files referenced in ANY active / non-archived order_item_addons
+        $inOrderAddon = OrderItemAddon::where(function($q) use ($path, $fileBase) {
+                $q->where('file_paths', 'like', "%{$path}%")
+                  ->orWhere('file_paths', 'like', "%{$fileBase}%");
+            })
+            ->where('file_paths', 'not like', '%deleted_by_retention%')
+            ->whereHas('orderItem.order', function ($q) {
+                $q->whereNotIn('status', ['cancelled', 'expired']);
+            })->exists();
         if ($inOrderAddon) {
             return true;
         }
 
-        // 3. NEVER delete files referenced in recent active/pending carts
+        // 3. NEVER delete files referenced in recent active/pending carts (CartItem)
         $inActiveCart = CartItem::where('id', '!=', $excludeCartItemId)
-            ->where('uploaded_files', 'like', "%{$path}%")
+            ->where(function($q) use ($path, $fileBase) {
+                $q->where('uploaded_files', 'like', "%{$path}%")
+                  ->orWhere('uploaded_files', 'like', "%{$fileBase}%");
+            })
             ->whereHas('cart', function ($q) {
                 $q->whereIn('status', ['active', 'pending'])
                   ->where('updated_at', '>=', Carbon::now()->subDays(14));
             })->exists();
+        if ($inActiveCart) {
+            return true;
+        }
 
-        return $inActiveCart;
+        // 4. NEVER delete files referenced in recent active/pending carts (CartItemAddon)
+        $inActiveCartAddon = \App\Models\CartItemAddon::whereHas('cartItem.cart', function ($q) {
+                $q->whereIn('status', ['active', 'pending'])
+                  ->where('updated_at', '>=', Carbon::now()->subDays(14));
+            })
+            ->where(function ($q) use ($path, $fileBase) {
+                $q->where('file_paths', 'like', "%{$path}%")
+                  ->orWhere('file_paths', 'like', "%{$fileBase}%")
+                  ->orWhere('temp_file_ids', 'like', "%{$path}%")
+                  ->orWhere('temp_file_ids', 'like', "%{$fileBase}%");
+            })->exists();
+        if ($inActiveCartAddon) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

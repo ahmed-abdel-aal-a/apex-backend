@@ -373,7 +373,13 @@ class OrderController extends Controller
     {
         $orderItem = OrderItem::with('order')->findOrFail($itemId);
 
+        $isJsonRequest = $request->expectsJson() || $request->wantsJson() || $request->query('json') === '1';
+        $isDirect = $request->query('direct') === '1';
+
         if ($orderItem->item_type !== 'printing') {
+            if ($isJsonRequest) {
+                return response()->json(['message' => 'هذا العنصر ليس طلب طباعة.'], 400);
+            }
             abort(400, 'هذا العنصر ليس طلب طباعة.');
         }
 
@@ -383,6 +389,9 @@ class OrderController extends Controller
 
         $fileEntry = $uploadedFiles[$category] ?? null;
         if (!$fileEntry) {
+            if ($isJsonRequest) {
+                return response()->json(['message' => 'الملف المطلوب غير موجود في هذا الطلب.'], 404);
+            }
             abort(404, 'الملف المطلوب غير موجود في هذا الطلب.');
         }
 
@@ -391,40 +400,73 @@ class OrderController extends Controller
         $fileName = is_array($fileEntry) ? ($fileEntry['name'] ?? basename($path)) : basename($path);
 
         if (!is_string($path) || empty($path)) {
+            if ($isJsonRequest) {
+                return response()->json(['message' => 'الملف المطلوب غير متاح في هذا الطلب.'], 404);
+            }
             abort(404, 'الملف المطلوب غير موجود في هذا الطلب.');
         }
 
         // الحماية من الملفات المؤرشفة وفق سياسة الاحتفاظ (Retention Policy)
         if ($path === 'deleted_by_retention' || $path === 'deleted_by_system' || $orderItem->file_status === 'cleaned_by_retention') {
+            if ($isJsonRequest) {
+                return response()->json(['message' => 'تم أرشفة وحذف هذا الملف تلقائياً لمرور أكثر من 14 يوماً على تسليم الطلب.'], 410);
+            }
             abort(410, 'تم أرشفة وحذف هذا الملف تلقائياً لمرور أكثر من 14 يوماً على تسليم الطلب.');
         }
 
         // الحماية الصارمة من ثغرات Path Traversal
         if (str_contains($path, '..') || str_starts_with($path, '/') || str_starts_with($path, '\\')) {
+            if ($isJsonRequest) {
+                return response()->json(['message' => 'مسار الملف غير مسموح به أمنياً.'], 403);
+            }
             abort(403, 'مسار الملف غير مسموح به أمنياً.');
         }
 
         if (!Storage::disk($disk)->exists($path)) {
+            if ($isJsonRequest) {
+                return response()->json(['message' => "الملف غير موجود على وحدة التخزين ({$disk})."], 404);
+            }
             abort(404, "الملف غير موجود على وحدة التخزين ({$disk}).");
         }
 
-        // إذا كان الملف مخزناً على Cloudflare R2، يتم استخدام رابط مؤقت (Presigned URL) لمدة 30 دقيقة
-        // للتحميل المباشر من سحابة Cloudflare بأقصى سرعة ودون استهلاك ذاكرة ووقت تشغيل PHP على السيرفر
         // [RFC 6266]: استخدام rawurlencode لحماية ودعم أسماء الملفات العربية والأجنبية بشكل قياسي
+        $encodedFileName = rawurlencode($fileName);
+        $asciiFallback = preg_replace('/[^\x20-\x7e]/', '_', $fileName) ?: 'download';
+        $contentDisposition = "attachment; filename=\"{$asciiFallback}\"; filename*=UTF-8''{$encodedFileName}";
+
+        // إذا كان الملف مخزناً على Cloudflare R2 / Backblaze B2، يتم استخدام رابط مؤقت (Presigned URL) لمدة 30 دقيقة
         if ($disk === 'r2') {
             try {
-                $encodedFileName = rawurlencode($fileName);
-                $asciiFallback = preg_replace('/[^\x20-\x7e]/', '_', $fileName) ?: 'download';
-                $contentDisposition = "attachment; filename=\"{$asciiFallback}\"; filename*=UTF-8''{$encodedFileName}";
-
                 $tempUrl = Storage::disk('r2')->temporaryUrl($path, now()->addMinutes(30), [
                     'ResponseContentDisposition' => $contentDisposition
                 ]);
+
+                if ($isJsonRequest && !$isDirect) {
+                    return response()->json([
+                        'status' => 'success',
+                        'download_url' => $tempUrl,
+                        'name' => $fileName,
+                        'disk' => 'r2',
+                    ]);
+                }
+
                 return redirect()->away($tempUrl);
             } catch (\Throwable $e) {
                 \Illuminate\Support\Facades\Log::warning("R2 temporaryUrl generation failed, falling back to stream download: " . $e->getMessage());
                 return Storage::disk('r2')->download($path, $fileName);
             }
+        }
+
+        // التخزين المحلي (Local Disk)
+        if ($isJsonRequest && !$isDirect) {
+            $token = $request->bearerToken() ?: $request->query('token');
+            $localDirectUrl = $request->url() . '?direct=1' . ($token ? '&token=' . urlencode($token) : '');
+            return response()->json([
+                'status' => 'success',
+                'download_url' => $localDirectUrl,
+                'name' => $fileName,
+                'disk' => 'local',
+            ]);
         }
 
         return Storage::disk($disk)->download($path, $fileName);
