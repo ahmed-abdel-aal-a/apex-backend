@@ -117,6 +117,8 @@ Route::middleware('auth:sanctum')->prefix('v1/admin')->group(function () {
     Route::patch('/orders/{orderId}/items/{itemId}/confirm-price', [OrderController::class, 'confirmItemPrice']);
     Route::post('/orders/{orderId}/issue-price-confirmation', [OrderController::class, 'issuePriceConfirmation']);
     Route::post('/orders/{orderId}/confirm-manual-payment', [OrderController::class, 'confirmManualPayment']);
+    Route::get('/orders/{id}/shipping/awb', [AdminShippingController::class, 'getAwb']);
+    Route::post('/orders/{id}/shipping/retry-waybill', [AdminShippingController::class, 'retryWaybill']);
 
     // Abandoned Carts
     Route::get('/abandoned-carts', [AbandonedCartController::class, 'index']);
@@ -262,7 +264,7 @@ Route::prefix('v1/payment')->group(function () {
 });
 
 Route::prefix('v1/shipping')->group(function () {
-    Route::post('/webhook/{provider}', [\App\Http\Controllers\Api\Shipping\ShippingWebhookController::class, 'handle'])
+    Route::match(['get', 'post'], '/webhook/{provider}', [\App\Http\Controllers\Api\Shipping\ShippingWebhookController::class, 'handle'])
         ->middleware(\App\Http\Middleware\ShippingWebhookSecurity::class);
 });
 

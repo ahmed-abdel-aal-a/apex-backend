@@ -13,8 +13,8 @@ class Order extends Model
     protected $fillable = [
         'cart_id', 'customer_id', 'customer_name', 'customer_phone', 'total', 'items_count',
         'status', 'payment_status', 'shipping_company',
-        'tracking_number', 'shipping_address',
-        'zone_id', 'subtotal', 'shipping_cost', 'shipping_method',
+        'tracking_number', 'shipping_provider_id', 'shipping_status', 'shipping_error_log', 'shipping_address',
+        'zone_id', 'subtotal', 'shipping_cost', 'shipping_method', 'latest_shipping_update_at',
         'cod_fee', 'tax_amount', 'payment_method',
         'coupon_id', 'coupon_code', 'discount_amount',
         'payment_type', 'deposit_percentage', 'deposit_amount', 'remaining_amount',
@@ -35,6 +35,7 @@ class Order extends Model
         'remaining_amount' => 'decimal:2',
         'deposit_paid_at' => 'datetime',
         'remaining_paid_at' => 'datetime',
+        'latest_shipping_update_at' => 'datetime',
         'inventory_deducted_at' => 'datetime',
         'payment_token_expires_at' => 'datetime',
         'price_confirmed_at' => 'datetime',
@@ -59,6 +60,11 @@ class Order extends Model
     public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function zone()
+    {
+        return $this->belongsTo(ShippingZone::class, 'zone_id');
     }
 
     public function coupon()

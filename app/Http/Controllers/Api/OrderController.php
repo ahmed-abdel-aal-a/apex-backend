@@ -315,9 +315,9 @@ class OrderController extends Controller
                 }
             }
 
-            // توليد بوليصة الشحن عند تحول الطلب إلى جاهز للشحن (إذا لم تكن قد ولدت من قبل)
+            // توليد بوليصة الشحن عند تحول الطلب إلى جاهز للشحن (إذا لم تكن قد ولدت من قبل أو كانت وهمية)
             if ($newStatus === 'ready_for_shipping' && $oldStatus !== 'ready_for_shipping') {
-                if (empty($order->tracking_number)) {
+                if (empty($order->tracking_number) || str_starts_with($order->tracking_number, 'AWB-')) {
                     \App\Jobs\CreateShippingWaybillJob::dispatch($order->id)->afterCommit();
                 }
             }
@@ -325,8 +325,9 @@ class OrderController extends Controller
             // إغلاق الدورة المالية للطلب عند التسليم الفعلي للعميل
             $orderUpdates = ['status' => $newStatus];
             if (in_array($newStatus, ['delivered', 'completed']) && !in_array($oldStatus, ['delivered', 'completed'])) {
-                if ($order->payment_status === 'partially_paid' || ($order->payment_method === 'cod' && $order->payment_status !== 'paid')) {
+                if ($order->payment_status !== 'paid') {
                     $orderUpdates['payment_status'] = 'paid';
+                    $orderUpdates['remaining_amount'] = 0.00;
                     $orderUpdates['remaining_paid_at'] = now();
                 }
             }
