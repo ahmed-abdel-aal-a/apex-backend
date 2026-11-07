@@ -948,7 +948,7 @@ INSERT INTO migrations VALUES(19,'2026_07_21_025519_create_cart_contact_historie
 INSERT INTO migrations VALUES(20,'2026_07_21_025520_create_abandoned_carts_settings_table',1);
 INSERT INTO migrations VALUES(21,'2026_07_21_143628_add_status_to_customers_table',1);
 INSERT INTO migrations VALUES(22,'2026_07_21_180845_create_faq_questions_table',1);
-INSERT INTO migrations VALUES(23,'2026_07_21_180845_create_faq_sections_table',1);
+INSERT INTO migrations VALUES(23,'2026_07_21_180844_create_faq_sections_table',1);
 INSERT INTO migrations VALUES(24,'2026_07_21_180846_create_chat_settings_table',1);
 INSERT INTO migrations VALUES(25,'2026_07_21_180847_create_chat_conversations_table',1);
 INSERT INTO migrations VALUES(26,'2026_07_21_180848_create_chat_messages_table',1);

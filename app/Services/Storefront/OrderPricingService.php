@@ -69,20 +69,30 @@ class OrderPricingService
 
         // 4. Calculate Shipping, COD, and Tax via dedicated ShippingCalculationService
         $settings = Setting::getAllSettings();
-        $shippingService = app(\App\Services\Shipping\ShippingCalculationService::class);
-        $calcResult = $shippingService->calculate(
-            subtotal: (string)$newSubtotal,
-            discountAmount: (string)$discountAmount,
-            zoneId: (int)($order->zone_id ?: 1),
-            shippingMethod: (string)($order->shipping_method ?: 'standard'),
-            paymentMethod: (string)($order->payment_method ?: 'online'),
-            taxAmount: (string)($order->tax_amount ?? '0.00')
-        );
+        $zone = $order->zone_id ? \App\Models\ShippingZone::find($order->zone_id) : null;
 
-        $newShippingCost = $calcResult['final_shipping_cost'];
-        $grandTotal = $calcResult['grand_total'];
-        $codFee = $calcResult['cod_fee'];
-        $taxAmount = $calcResult['tax_amount'];
+        if ($zone) {
+            $shippingService = app(\App\Services\Shipping\ShippingCalculationService::class);
+            $calcResult = $shippingService->calculate(
+                subtotal: (string)$newSubtotal,
+                discountAmount: (string)$discountAmount,
+                zoneId: (int)$zone->id,
+                shippingMethod: (string)($order->shipping_method ?: 'standard'),
+                paymentMethod: (string)($order->payment_method ?: 'online'),
+                taxAmount: (string)($order->tax_amount ?? '0.00')
+            );
+
+            $newShippingCost = $calcResult['final_shipping_cost'];
+            $grandTotal = $calcResult['grand_total'];
+            $codFee = $calcResult['cod_fee'];
+            $taxAmount = $calcResult['tax_amount'];
+        } else {
+            // Safe fallback if order has no zone or zone was removed: preserve order's existing shipping_cost & cod_fee
+            $newShippingCost = (string)number_format((float)($order->shipping_cost ?? 0.0), 2, '.', '');
+            $codFee = (string)number_format((float)($order->cod_fee ?? 0.0), 2, '.', '');
+            $taxAmount = (string)number_format((float)($order->tax_amount ?? 0.0), 2, '.', '');
+            $grandTotal = bcadd(bcadd($netSubtotal, $newShippingCost, 2), $codFee, 2);
+        }
 
         // 5. Deposit and Remaining recalculation if order is a deposit order
         $newDepositAmount = $order->deposit_amount;
