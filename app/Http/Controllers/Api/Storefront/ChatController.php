@@ -24,7 +24,7 @@ class ChatController extends Controller
                 'message_text' => 'مرحباً، كيف يمكنني مساعدتك اليوم؟',
                 'display_location' => 'chat_only',
                 'theme_color' => '#f59e0b',
-                'whatsapp_number' => '01000000000',
+                'whatsapp_number' => '01011348890',
                 'whatsapp_enabled' => true,
                 'whatsapp_default_message' => 'مرحباً، أود الاستفسار عن خدمات ومنتجات Print Express.',
             ]);
@@ -36,7 +36,7 @@ class ChatController extends Controller
                 'messageText' => $settings->message_text,
                 'displayLocation' => $settings->display_location,
                 'themeColor' => $settings->theme_color,
-                'whatsappNumber' => $settings->whatsapp_number ?: '01000000000',
+                'whatsappNumber' => $settings->whatsapp_number ?: '01011348890',
                 'whatsappEnabled' => (bool)($settings->whatsapp_enabled ?? true),
                 'whatsappDefaultMessage' => $settings->whatsapp_default_message ?: 'مرحباً، أود الاستفسار عن خدمات ومنتجات Print Express.',
             ]

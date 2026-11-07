@@ -17,7 +17,7 @@ class SettingsController extends Controller
             'message_text' => 'مرحباً، كيف يمكنني مساعدتك؟',
             'display_location' => 'chat_only',
             'theme_color' => '#f59e0b',
-            'whatsapp_number' => '01000000000',
+            'whatsapp_number' => '01011348890',
             'whatsapp_enabled' => true,
             'whatsapp_default_message' => 'مرحباً، أود الاستفسار عن خدمات Print Express.',
         ]);

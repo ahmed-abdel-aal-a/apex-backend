@@ -153,7 +153,31 @@ class StorefrontDataController extends Controller
                 'express_shipping_delivery_time' => $expressShippingDeliveryTime,
                 'free_shipping_enabled' => $freeShippingEnabled,
                 'free_shipping_threshold' => $freeShippingThreshold,
-                'whatsapp_number' => $settings['whatsapp_number'] ?? '01000000000',
+                'whatsapp_number' => $settings['whatsapp_number'] ?? '01011348890',
+            ]
+        ]);
+    }
+
+    /**
+     * Get public store settings and contact info
+     */
+    public function getStoreSettings()
+    {
+        $settings = \App\Models\Setting::getAllSettings();
+        $chatSetting = \App\Models\ChatSetting::first();
+
+        return response()->json([
+            'data' => [
+                'store_name' => $settings['store_name'] ?? 'Print Express',
+                'store_phone' => $settings['store_phone'] ?? '01011348890',
+                'whatsapp_number' => $chatSetting?->whatsapp_number ?: ($settings['whatsapp_number'] ?? '01011348890'),
+                'owner_phone' => $settings['owner_phone'] ?? '01023336371',
+                'store_location_map' => $settings['store_location_map'] ?? 'https://maps.app.goo.gl/BE6b7dTrhY3hH1BR8?g_st=ic',
+                'google_maps_url' => $settings['google_maps_url'] ?? 'https://maps.app.goo.gl/BE6b7dTrhY3hH1BR8?g_st=ic',
+                'social_facebook' => $settings['social_facebook'] ?? 'https://www.facebook.com/share/1CS2Nj9hVW/?mibextid=wwXIfr',
+                'social_instagram' => $settings['social_instagram'] ?? 'https://www.instagram.com/printexpresseg.press?dlrf=MThqMGF5bnJkbmdobg%3D%3D&utm_source=qr',
+                'social_tiktok' => $settings['social_tiktok'] ?? 'https://www.tiktok.com/@print.express12?_r=1&_t=ZS-9B4Bt50ZxIu',
+                'social_youtube' => $settings['social_youtube'] ?? 'https://youtube.com/@printexpress1501?si=vr-hHeCnfPWhSCZn',
             ]
         ]);
     }

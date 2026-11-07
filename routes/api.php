@@ -205,6 +205,7 @@ Route::prefix('v1/storefront')->group(function () {
     Route::get('/products', [StorefrontDataController::class, 'getProducts']);
     Route::get('/products/{id}', [StorefrontDataController::class, 'getProduct']);
     Route::get('/shipping-zones', [StorefrontDataController::class, 'getShippingZones']);
+    Route::get('/settings', [StorefrontDataController::class, 'getStoreSettings']);
     Route::get('/checkout-settings', [StorefrontDataController::class, 'getCheckoutSettings']);
     Route::post('/checkout', [CheckoutController::class, 'process'])->middleware('throttle:5,1');
     Route::get('/orders/{id}/payment-status', [CheckoutController::class, 'getPaymentStatus']);

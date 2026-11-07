@@ -25,6 +25,16 @@ class SettingsSeeder extends Seeder
         Setting::firstOrCreate(['key' => 'warehouse_governorate'], ['value' => 'القاهرة']);
         Setting::firstOrCreate(['key' => 'warehouse_city'], ['value' => 'مدينة نصر']);
         Setting::firstOrCreate(['key' => 'warehouse_address'], ['value' => 'شارع عباس العقاد، متفرع من مصطفى النحاس، مبنى رقم 15، الدور الثاني']);
+        Setting::firstOrCreate(['key' => 'whatsapp_number'], ['value' => '01011348890']);
+        Setting::firstOrCreate(['key' => 'store_phone'], ['value' => '01011348890']);
+        Setting::firstOrCreate(['key' => 'owner_phone'], ['value' => '01023336371']);
+        Setting::firstOrCreate(['key' => 'store_location_map'], ['value' => 'https://maps.app.goo.gl/BE6b7dTrhY3hH1BR8?g_st=ic']);
+        Setting::firstOrCreate(['key' => 'google_maps_url'], ['value' => 'https://maps.app.goo.gl/BE6b7dTrhY3hH1BR8?g_st=ic']);
+        Setting::firstOrCreate(['key' => 'social_facebook'], ['value' => 'https://www.facebook.com/share/1CS2Nj9hVW/?mibextid=wwXIfr']);
+        Setting::firstOrCreate(['key' => 'social_instagram'], ['value' => 'https://www.instagram.com/printexpresseg.press?dlrf=MThqMGF5bnJkbmdobg%3D%3D&utm_source=qr']);
+        Setting::firstOrCreate(['key' => 'social_tiktok'], ['value' => 'https://www.tiktok.com/@print.express12?_r=1&_t=ZS-9B4Bt50ZxIu']);
+        Setting::firstOrCreate(['key' => 'social_youtube'], ['value' => 'https://youtube.com/@printexpress1501?si=vr-hHeCnfPWhSCZn']);
+        Setting::firstOrCreate(['key' => 'store_name'], ['value' => 'Print Express']);
 
         // Shipping Companies
         $companies = [

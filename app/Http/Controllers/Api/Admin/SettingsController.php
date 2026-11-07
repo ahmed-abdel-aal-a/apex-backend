@@ -41,6 +41,13 @@ class SettingsController extends Controller
             'store_name' => 'nullable|string',
             'store_email' => 'nullable|string',
             'store_phone' => 'nullable|string',
+            'owner_phone' => 'nullable|string',
+            'store_location_map' => 'nullable|string',
+            'google_maps_url' => 'nullable|string',
+            'social_facebook' => 'nullable|string',
+            'social_instagram' => 'nullable|string',
+            'social_tiktok' => 'nullable|string',
+            'social_youtube' => 'nullable|string',
         ]);
 
         foreach ($data as $key => $value) {
