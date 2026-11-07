@@ -21,6 +21,11 @@ class SettingsController extends Controller
             'whatsapp_enabled' => true,
             'whatsapp_default_message' => 'مرحباً، أود الاستفسار عن خدمات Print Express.',
         ]);
+
+        if (empty($settings->whatsapp_number) || $settings->whatsapp_number === '01000000000' || str_contains((string)$settings->whatsapp_number, '000000')) {
+            $settings->whatsapp_number = '01011348890';
+            $settings->save();
+        }
         
         return response()->json(['data' => [
             'id' => $settings->id,

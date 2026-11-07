@@ -30,13 +30,19 @@ class ChatController extends Controller
             ]);
         }
 
+        $whatsappNumber = $settings->whatsapp_number;
+        if (empty($whatsappNumber) || $whatsappNumber === '01000000000' || str_contains((string)$whatsappNumber, '000000')) {
+            $whatsappNumber = '01011348890';
+            $settings->update(['whatsapp_number' => '01011348890']);
+        }
+
         return response()->json([
             'data' => [
                 'isMessageEnabled' => (bool)$settings->is_message_enabled,
                 'messageText' => $settings->message_text,
                 'displayLocation' => $settings->display_location,
                 'themeColor' => $settings->theme_color,
-                'whatsappNumber' => $settings->whatsapp_number ?: '01011348890',
+                'whatsappNumber' => $whatsappNumber,
                 'whatsappEnabled' => (bool)($settings->whatsapp_enabled ?? true),
                 'whatsappDefaultMessage' => $settings->whatsapp_default_message ?: 'مرحباً، أود الاستفسار عن خدمات ومنتجات Print Express.',
             ]
